@@ -1,6 +1,10 @@
 import { PreScreen } from './src/preScreen';
 import {BBF} from "./src/FontLib/bbf/bbf.ts";
 
-const s = new PreScreen();
+const s = new PreScreen(
+    70,
+    40,
+    ' '
+);
 
-s.DrawCenterString("HELLO WORLD", BBF, "=");
+s.DrawCenterString("HELLO", BBF, "_");

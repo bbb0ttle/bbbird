@@ -4,7 +4,7 @@ import bbGlyphs from "./bbf.json";
 export const BBF: Font = {
     CharHeight: 3,
     CharWidth: 5,
-    CharSpace: 2,
+    CharSpace: 1,
     Name: "BBF",
     Glyphs: bbGlyphs as Glyphs,
 

@@ -14,8 +14,12 @@
   line-height: 1;
   display: inline-block;
 
-  border: dashed 1px;
+  border: dotted 1px;
   padding: 4px;
+
+  pointer-events: none;
+
+  user-select: none;
 }
 
 #app {

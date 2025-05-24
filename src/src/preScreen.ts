@@ -7,8 +7,10 @@ export class PreScreen implements Tyes {
   width: number = 90;
   height: number = 15;
 
-  constructor() {
-    this.Init(' ');
+  constructor(width: number = 90, height: number = 90, char: string = ' ') {
+    this.width = width;
+    this.height = height;
+    this.Init(char);
   }
 
   Init(char = ' ') {
