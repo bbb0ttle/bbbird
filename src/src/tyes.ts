@@ -32,4 +32,8 @@ export interface Font {
   };
 
   GetChar: (targetChar: string, shape: string) => Picture;
+
+  CharWidth: number;
+  CharHeight: number;
+  CharSpace: number;
 }

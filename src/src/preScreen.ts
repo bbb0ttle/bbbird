@@ -50,6 +50,30 @@ export class PreScreen implements Tyes {
     this.DrawPicture(picture, pos);
   }
 
+  DrawString(str: string, pos: Position, font: Font = BBF, shape: string = '*') {
+    let x = pos.x;
+    const y = pos.y;
+
+    for (let i = 0; i < str.length; i++) {
+      const char = str[i];
+      this.DrawChar(char, { x, y }, font, shape);
+      x += font.CharWidth + font.CharSpace;
+    }
+  }
+
+  DrawCenterString(string: string, font = BBF, shape = '*') {
+    const pos = this.getCenterPosForString(string, font);
+    this.DrawString(string, pos, font, shape);
+  }
+
+  private getCenterPosForString(s: string, font = BBF): Position {
+    const stringWid = s.length * (font.CharWidth + font.CharSpace) - font.CharSpace;
+    const x = Math.floor((this.width - stringWid) / 2) + 1;
+    const y = Math.floor((this.height - font.CharHeight) / 2) - 1;
+
+    return { x, y };
+  }
+
   private pixelWalker(pixelUpdater: (p: CharPixel) => void) {
     let str = '';
 
