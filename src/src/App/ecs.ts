@@ -12,8 +12,6 @@ export abstract class System {
     public entities: Set<EntityId> = new Set();
 
     public abstract update(deltaTime: number): void;
-
-    public abstract getRequiredComponents(): string[];
 }
 
 export class ECSManager {
@@ -22,6 +20,7 @@ export class ECSManager {
     private systems: System[] = [];
 
     private entityComponentMasks = new Map<EntityId, Set<string>>();
+    private systemRequiredComDict = new Map<System, string[]>();
 
     constructor() {
 
@@ -71,6 +70,7 @@ export class ECSManager {
 
     public addSystem(system: System, requiredComponents: string[]): void {
         this.systems.push(system);
+        this.systemRequiredComDict.set(system, requiredComponents);
         // 为系统设置其关心的实体列表
         for (const [entityId, componentMask] of this.entityComponentMasks.entries()) {
             if (requiredComponents.every(compType => componentMask.has(compType))) {
@@ -79,12 +79,16 @@ export class ECSManager {
         }
     }
 
+    private getRequiredComponents(sys: System): string[] {
+        return this.systemRequiredComDict.get(sys)!;
+    }
+
     private updateSystemEntityLists(entity: EntityId): void {
         const componentMask = this.entityComponentMasks.get(entity);
         if (!componentMask) return; // 实体可能已被销毁
 
         for (const system of this.systems) {
-            if (system.getRequiredComponents().every(requiredComponent => componentMask.has(requiredComponent))) {
+            if (this.getRequiredComponents(system).every(requiredComponent => componentMask.has(requiredComponent))) {
                 system.entities.add(entity);
             } else {
                 system.entities.delete(entity);

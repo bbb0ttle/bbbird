@@ -1,7 +1,19 @@
 import { ECSManager } from "./ecs.ts";
 import {PreScreen} from "../Screen/preScreen.ts";
-import {RenderSystem} from "./RenderSystem.ts";
 import type {Picture, Position} from "../Screen/tyes.ts";
+import {DotMatrixTextRenderSystem} from "./RenderSystem/DotMatrixTextRenderSystem.ts";
+import {PlainRenderSystem} from "./RenderSystem/PlainTextRenderSystem.ts";
+
+export interface TextCom {
+    text: string;
+}
+
+export const BuiltInComName = {
+    PIC: "picture",
+    POS: "position",
+    TEXT_PLAIN: "text",
+    TEXT_MAT: "dotMatrixText",
+}
 
 export abstract class App {
     protected ecsManager: ECSManager = new ECSManager();
@@ -10,15 +22,31 @@ export abstract class App {
     private animationFrameId: number | null = null; // 用于 requestAnimationFrame
 
     protected constructor() {
-        this.ecsManager.registerComponentType<Picture>("picture");
-        this.ecsManager.registerComponentType<Position>("position");
-
-        this.ecsManager.addSystem(new RenderSystem(
-            this.screen,
-            this.ecsManager.getComponentMap<Picture>("picture"),
-            this.ecsManager.getComponentMap<Position>("position"),
-            ), ["picture", "position"]);
+        this.ecsManager.registerComponentType<Picture>(BuiltInComName.PIC);
+        this.ecsManager.registerComponentType<Position>(BuiltInComName.POS);
+        this.ecsManager.registerComponentType<TextCom>(BuiltInComName.TEXT_PLAIN);
+        this.ecsManager.registerComponentType<TextCom>(BuiltInComName.TEXT_MAT);
     }
+
+    private addBuiltInSystem() {
+        this.ecsManager.addSystem(new DotMatrixTextRenderSystem(
+            this.screen,
+            this.ecsManager
+        ), [
+            BuiltInComName.TEXT_MAT,
+            BuiltInComName.POS
+        ]);
+
+        this.ecsManager.addSystem(new PlainRenderSystem(
+            this.screen,
+            this.ecsManager
+        ), [
+            BuiltInComName.TEXT_PLAIN,
+            BuiltInComName.POS,
+        ]);
+    }
+
+    public abstract registerSystem(): void;
 
     private gameLoop = () => {
         const currentTime = window.performance.now();
@@ -31,6 +59,8 @@ export abstract class App {
     }
 
     public start() {
+        this.registerSystem();
+        this.addBuiltInSystem();
         this.animationFrameId = window.requestAnimationFrame(this.gameLoop);
     }
 
