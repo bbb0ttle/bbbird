@@ -20,7 +20,7 @@ export class PreScreen implements Screen {
   height: number = 10;
 
   constructor() {
-    this.Init();
+    this.Init(' ');
   }
 
   Init(char = 'F') {
@@ -61,13 +61,13 @@ export class PreScreen implements Screen {
     });
   }
 
-  private pixelWalker(pixelUdpater: (p: CharPixel) => void) {
+  private pixelWalker(pixelUpdater: (p: CharPixel) => void) {
     let str = '';
 
     for (var i = 0; i < this.height; i++) {
       for (var j = 0; j < this.width; j++) {
         const p = this.pixels[i][j];
-        pixelUdpater(p);
+        pixelUpdater(p);
         str += p.Shape;
       }
       str += '\n';
