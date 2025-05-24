@@ -1,56 +1,29 @@
-import type { Pixel, Position, Screen } from './screen';
+import type {Font, Picture, Pixel, Position, Tyes} from './tyes.ts';
+import { CharPixel } from './CharPixel';
+import {BBF} from "./FontLib/bbf/bbf.ts";
 
-export class CharPixel implements Pixel {
-  Shape: string = '';
-  Pos: Position = { x: 0, y: 0 };
-
-  constructor(p: Position, s: string) {
-    this.Shape = s;
-    this.Pos = p;
-  }
-
-  IsPosEqual(p: Pixel): boolean {
-    return this.Pos.x === p.Pos.x && this.Pos.y === p.Pos.y; 
-  }
-}
-
-export class PreScreen implements Screen {
+export class PreScreen implements Tyes {
   pixels: CharPixel[][] = [];
-  width: number = 50;
-  height: number = 10;
+  width: number = 90;
+  height: number = 15;
 
   constructor() {
     this.Init(' ');
   }
 
-  Init(char = 'F') {
-    for (var i = 0; i < this.height; i++) {
+  Init(char = ' ') {
+    for (let i = 0; i < this.height; i++) {
       this.pixels[i] = [];
-      for (var j = 0; j < this.width; j++) {
+      for (let j = 0; j < this.width; j++) {
         this.pixels[i].push(
-          new CharPixel(
-            {
-              x: j,
-              y: i,
-            },
-            char
-          )
+          CharPixel.Create(j, i, char)
         );
       }
     }
   }
 
-  Draw() {
-    let str = '';
-
-    for (var i = 0; i < this.height; i++) {
-      for (var j = 0; j < this.width; j++) {
-        str += this.pixels[i][j].Shape;
-      }
-      str += '\n';
-    }
-
-    this._pre.innerText = str;
+  Clear() {
+    this.pixelWalker(p => p.Shape = ' ');
   }
 
   DrawPixel(p: Pixel) {
@@ -61,11 +34,27 @@ export class PreScreen implements Screen {
     });
   }
 
+  DrawPicture(picture: Picture, pos: Position) {
+    this.pixelWalker(target => {
+      const x = target.Pos.x - pos.x;
+      const y = target.Pos.y - pos.y;
+
+      if (x >= 0 && x < picture[0].length && y >= 0 && y < picture.length) {
+        target.Shape = picture[y][x];
+      }
+    });
+  }
+
+  DrawChar(char: string, pos: Position, font: Font = BBF, shape: string = '*') {
+    const picture = font.GetChar(char, shape);
+    this.DrawPicture(picture, pos);
+  }
+
   private pixelWalker(pixelUpdater: (p: CharPixel) => void) {
     let str = '';
 
-    for (var i = 0; i < this.height; i++) {
-      for (var j = 0; j < this.width; j++) {
+    for (let i = 0; i < this.height; i++) {
+      for (let j = 0; j < this.width; j++) {
         const p = this.pixels[i][j];
         pixelUpdater(p);
         str += p.Shape;
