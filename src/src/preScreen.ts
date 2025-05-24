@@ -68,7 +68,7 @@ export class PreScreen implements Tyes {
 
   private getCenterPosForString(s: string, font = BBF): Position {
     const stringWid = s.length * (font.CharWidth + font.CharSpace) - font.CharSpace;
-    const x = Math.floor((this.width - stringWid) / 2) + 1;
+    const x = Math.floor((this.width - stringWid) / 2);
     const y = Math.floor((this.height - font.CharHeight) / 2) - 1;
 
     return { x, y };
