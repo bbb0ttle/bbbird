@@ -1,10 +1,21 @@
-import { PreScreen } from './src/preScreen';
+import {App} from "./src/App";
+import type {Picture, Position} from "./src/Screen/tyes.ts";
 import {BBF} from "./src/FontLib/bbf/bbf.ts";
 
-const s = new PreScreen(
-    70,
-    40,
-    ' '
-);
+class TestApp extends App {
+    constructor() {
+        super();
 
-s.DrawCenterString("HELLO", BBF, "_");
+        this.ShowText();
+    }
+
+    private ShowText() {
+        var text = this.ecsManager.createEntity();
+
+        this.ecsManager.addComponent<Picture>(text, "picture", BBF.GetChar("H", "="))
+        this.ecsManager.addComponent<Position>(text, "position", {x: 0, y: 0});
+    }
+}
+
+const a = new TestApp();
+a.start();

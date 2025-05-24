@@ -20,6 +20,8 @@
   pointer-events: none;
 
   user-select: none;
+
+  margin-top: -10px;
 }
 
 #app {

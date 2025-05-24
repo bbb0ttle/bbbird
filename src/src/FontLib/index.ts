@@ -1,4 +1,4 @@
-import type {Font} from "../tyes.ts";
+import type {Font} from "../Screen/tyes.ts";
 
 export class FontLib {
   private _fonts: {
