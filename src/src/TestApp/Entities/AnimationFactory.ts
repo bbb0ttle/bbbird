@@ -39,6 +39,9 @@ export const createAnimation = (ecs: ECSManager, animation: FramesAnimation, def
         onCollision: (_) => {
             // 取消重力
             ecs.getComponentMap<GravityComponent>(BuiltInComName.GRAVITY_ACCELERATION).get(animationEntity)!.scale = 0;
+
+            // 待机
+            ecs.getComponentMap<AnimationComponent>(BuiltInComName.ANIMATION).get(animationEntity)!.currentAnimationName = "IDLE"
         }
     })
 

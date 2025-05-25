@@ -17,5 +17,8 @@ export const BirdAnimation: FramesAnimation = {
         multilineStrToPicture(BirdStr2),
         multilineStrToPicture(BirdStr3),
         multilineStrToPicture(BirdStr2),
+    ],
+    FALLING: [
+        multilineStrToPicture(BirdStr3),
     ]
 }
