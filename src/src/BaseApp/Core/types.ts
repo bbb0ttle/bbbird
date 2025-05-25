@@ -30,6 +30,10 @@ export type Glyphs = {
   [key: string]: Glyph
 }
 
+export interface FramesAnimation {
+  [key: string]: Picture[]
+}
+
 export interface Font {
   Name: string;
   Glyphs: {

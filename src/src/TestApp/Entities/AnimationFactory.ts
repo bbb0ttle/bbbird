@@ -1,4 +1,4 @@
-import type {Picture, Position} from "../../BaseApp/Core/types.ts";
+import type {FramesAnimation, Position} from "../../BaseApp/Core/types.ts";
 import {ECSManager, type EntityId} from "../../BaseApp/ECS/ecs.ts";
 import {
     type AnimationComponent,
@@ -8,12 +8,14 @@ import {
 } from "../../BaseApp/Components";
 import type {ColliderComponent} from "../../BaseApp/Components/Physic/ColliderComponent.ts";
 
-export const createAnimation = (ecs: ECSManager, frames: Picture[], pos: Position): EntityId => {
+export const createAnimation = (ecs: ECSManager, animation: FramesAnimation, defaultName: string, pos: Position): EntityId => {
     const animationEntity: EntityId = ecs.createEntity();
 
     ecs.addComponent<AnimationComponent>(animationEntity, BuiltInComName.ANIMATION, {
-        frames: frames,
+        animations: animation,
         frameDuration: 0.2,
+        loop: true,
+        currentAnimationName: defaultName
     });
 
     ecs.addComponent<Position>(animationEntity, BuiltInComName.POS, pos);
@@ -26,6 +28,8 @@ export const createAnimation = (ecs: ECSManager, frames: Picture[], pos: Positio
     ecs.addComponent<GravityComponent>(animationEntity, BuiltInComName.GRAVITY_ACCELERATION, {
         scale: 1.2
     });
+
+    const frames = animation[defaultName];
 
     ecs.addComponent<ColliderComponent>(animationEntity, BuiltInComName.COLLISION, {
         size: {

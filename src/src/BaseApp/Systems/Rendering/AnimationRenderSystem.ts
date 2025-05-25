@@ -13,13 +13,16 @@ export class AnimationRenderSystem extends System {
             const position = this.getComponent<Position>(entity, BuiltInComName.POS);
 
             if (animation && position) {
-
-                const frameCount = animation?.frames.length ?? 0;
+                const frames = animation.animations[animation.currentAnimationName];
+                if (!frames) {
+                    continue; // 如果没有找到对应的帧，跳过当前实体
+                }
+                const frameCount = frames.length ?? 0;
                 this.frameNum += deltaTime / animation.frameDuration;
                 const currentFrame = Math.floor(this.frameNum) % frameCount;
 
 
-                this.screen.DrawPicture(animation.frames[currentFrame], position);
+                this.screen.DrawPicture(frames[currentFrame], position);
             }
         }
     }

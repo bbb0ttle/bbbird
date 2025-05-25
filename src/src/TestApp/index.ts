@@ -33,7 +33,7 @@ export class TestApp extends App {
             y: 0
         })
 
-        createAnimation(this.ecsManager, BirdAnimation.IDLE, {
+        createAnimation(this.ecsManager, BirdAnimation, "FLY", {
             x: 4,
             y: 14
         });
