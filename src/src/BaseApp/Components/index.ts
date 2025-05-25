@@ -6,6 +6,7 @@ export const BuiltInComName = {
     VEL: "velocity",
     GRAVITY_ACCELERATION: "velocityAcceleration",
     ANIMATION: "animation",
+    COLLISION: "collision",
 }
 
 export * from "./Physic/GravityComponent"

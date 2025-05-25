@@ -1,4 +1,4 @@
-import type {Picture} from "../../../BaseApp/Core/Screen/tyes.ts";
+import type {Picture} from "../../../BaseApp/Core/types.ts";
 
 type Animations = {
     [key: string]: Picture[];

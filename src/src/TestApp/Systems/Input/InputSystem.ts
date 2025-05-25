@@ -1,6 +1,6 @@
 import {type ECSManager, System} from "../../../BaseApp/ECS/ecs.ts";
 import {InputManager} from "../../../BaseApp/Core/InputManager";
-import {BuiltInComName, type VelocityComponent} from "../../../BaseApp/Components";
+import {BuiltInComName, type GravityComponent, type VelocityComponent} from "../../../BaseApp/Components";
 
 export class InputSystem extends System {
     constructor(ecs: ECSManager) {
@@ -15,6 +15,7 @@ export class InputSystem extends System {
             if (vel) {
                 if (this.inputManager.isKeyPressed('w')) {
                     vel.vy = -100; // 向上移动 (模拟跳跃)
+                    this.ecs.getComponent<GravityComponent>(e, BuiltInComName.GRAVITY_ACCELERATION)!.scale = 1.2;
                 } else {
                     vel.vy = 0;
                 }

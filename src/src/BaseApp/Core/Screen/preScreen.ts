@@ -1,4 +1,4 @@
-import type {Font, Picture, Pixel, Position, Screen} from './tyes.ts';
+import type {Font, Picture, Pixel, Position, Screen} from '../types.ts';
 import { CharPixel } from './CharPixel.ts';
 import {BBF} from "../../Assets/FontLib/bbf/bbf.ts";
 

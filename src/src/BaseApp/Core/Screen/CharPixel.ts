@@ -1,4 +1,4 @@
-import type {Pixel, Position} from "./tyes.ts";
+import type {Pixel, Position} from "../types.ts";
 
 export class CharPixel implements Pixel {
     Shape: string = '';

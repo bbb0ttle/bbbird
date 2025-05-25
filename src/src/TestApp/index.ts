@@ -6,6 +6,7 @@ import {BuiltInComName} from "../BaseApp/Components";
 import {createAnimation} from "./Entities/AnimationFactory.ts";
 import {BirdAnimation} from "./Assets/Animations/bird.ts";
 import {InputSystem} from "./Systems/Input/InputSystem.ts";
+import {createGround} from "./Entities/GroundFactory.ts";
 
 export class TestApp extends App {
     constructor() {
@@ -36,5 +37,12 @@ export class TestApp extends App {
             x: 4,
             y: 14
         });
+
+        createGround(this.ecsManager, [
+            [":", ":", ":", ":", ":", ":", ":", ":", ":", ":"],
+        ], {
+            x: 0,
+            y: 27
+        })
     }
 }

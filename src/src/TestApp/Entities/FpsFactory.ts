@@ -1,5 +1,5 @@
 import {ECSManager, type EntityId} from "../../BaseApp/ECS/ecs.ts";
-import type {Position} from "../../BaseApp/Core/Screen/tyes.ts";
+import type {Position} from "../../BaseApp/Core/types.ts";
 import {type FpsCom, FpsCompName} from "../Components/FpsComponent.ts";
 import {BuiltInComName, type TextCom} from "../../BaseApp/Components";
 

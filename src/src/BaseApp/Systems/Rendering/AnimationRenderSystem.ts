@@ -1,7 +1,7 @@
 import {ECSManager, System} from "../../ECS/ecs.ts";
 import type {PreScreen} from "../../Core/Screen/preScreen.ts";
 import {type AnimationComponent, BuiltInComName} from "../../Components";
-import type {Position} from "../../Core/Screen/tyes.ts";
+import type {Position} from "../../Core/types.ts";
 
 export class AnimationRenderSystem extends System {
     private frameNum: number = 0;

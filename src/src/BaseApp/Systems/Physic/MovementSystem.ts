@@ -1,6 +1,6 @@
 import {ECSManager, System} from "../../ECS/ecs.ts";
 import {BuiltInComName} from "../../Components";
-import type {Position} from "../../Core/Screen/tyes.ts";
+import type {Position} from "../../Core/types.ts";
 import type {VelocityComponent} from "../../Components/Physic/VelocityComponent.ts";
 
 export class MovementSystem extends System {

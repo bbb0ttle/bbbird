@@ -1,6 +1,6 @@
 import { ECSManager } from "../../ECS/ecs.ts";
 import {PreScreen} from "../Screen/preScreen.ts";
-import type {Picture, Position} from "../Screen/tyes.ts";
+import type {Picture, Position} from "../types.ts";
 import {DotMatrixTextRenderSystem} from "../../Systems/Rendering/DotMatrixTextRenderSystem.ts";
 import {PlainRenderSystem} from "../../Systems/Rendering/PlainTextRenderSystem.ts";
 import {
@@ -13,6 +13,9 @@ import {
 import {MovementSystem} from "../../Systems/Physic/MovementSystem.ts";
 import {GravitySystem} from "../../Systems/Physic/GravitySystem.ts";
 import {AnimationRenderSystem} from "../../Systems/Rendering/AnimationRenderSystem.ts";
+import {CollisionSystem} from "../../Systems/Physic/CollisionSystem.ts";
+import type {ColliderComponent} from "../../Components/Physic/ColliderComponent.ts";
+import {PictureRenderSystem} from "../../Systems/Rendering/PictureRenderSystem.ts";
 
 export abstract class App {
     protected ecsManager: ECSManager = new ECSManager();
@@ -28,12 +31,18 @@ export abstract class App {
         this.ecsManager.registerComponentType<VelocityComponent>(BuiltInComName.VEL);
         this.ecsManager.registerComponentType<GravityComponent>(BuiltInComName.GRAVITY_ACCELERATION);
         this.ecsManager.registerComponentType<AnimationComponent>(BuiltInComName.ANIMATION);
+        this.ecsManager.registerComponentType<ColliderComponent>(BuiltInComName.COLLISION);
     }
 
     private addBuiltInSystem() {
         this.ecsManager.addSystem(new GravitySystem(this.ecsManager), [
             BuiltInComName.VEL,
             BuiltInComName.GRAVITY_ACCELERATION
+        ])
+
+        this.ecsManager.addSystem(new CollisionSystem(this.ecsManager), [
+            BuiltInComName.COLLISION,
+            BuiltInComName.POS
         ])
 
         this.ecsManager.addSystem(new MovementSystem(this.ecsManager), [
@@ -62,6 +71,14 @@ export abstract class App {
             this.screen
         ), [
             BuiltInComName.ANIMATION,
+            BuiltInComName.POS
+        ]);
+
+        this.ecsManager.addSystem(new PictureRenderSystem(
+            this.screen,
+            this.ecsManager
+        ), [
+            BuiltInComName.PIC,
             BuiltInComName.POS
         ])
     }

@@ -1,4 +1,4 @@
-import type {Picture} from "../../Core/Screen/tyes.ts";
+import type {Picture} from "../../Core/types.ts";
 
 export interface AnimationComponent {
     frames: Picture[];
