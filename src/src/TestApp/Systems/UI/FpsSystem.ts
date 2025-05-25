@@ -6,8 +6,8 @@ import {BuiltInComName} from "../../../BaseApp/Components";
 export class FPSSystem extends System {
     update(deltaTime: number): void {
         for (const e of this.entities) {
-            const fps = this.ecs.getComponentMap<FpsCom>(FpsCompName).get(e);
-            let textCom = this.ecs.getComponentMap<TextCom>(BuiltInComName.TEXT_PLAIN).get(e);
+            const fps = this.getComponent<FpsCom>(e, FpsCompName);
+            let textCom = this.getComponent<TextCom>(e, BuiltInComName.TEXT_PLAIN);
 
             const fpsValue = (1 / deltaTime).toFixed(2);
 
@@ -18,12 +18,8 @@ export class FPSSystem extends System {
         }
     }
 
-    private ecs: ECSManager;
-
     public constructor(ecs: ECSManager) {
-        super();
-
-        this.ecs = ecs;
+        super(ecs);
     }
 
 }

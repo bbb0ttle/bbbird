@@ -69,7 +69,7 @@ export class PreScreen implements Screen {
         const y = target.Pos.y - pos.y;
 
         if (x >= 0 && x < string.length && y === 0) {
-            target.Shape = string[x];
+            target.Shape = string[Math.floor(x)];
         }
     })
   }

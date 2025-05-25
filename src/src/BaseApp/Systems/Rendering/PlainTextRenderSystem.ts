@@ -10,8 +10,8 @@ export class PlainRenderSystem extends System {
         this.screen.Clear();
 
         for (const e of this.entities) {
-            const pos = this.ecs.getComponentMap<Position>(BuiltInComName.POS).get(e);
-            const textCom = this.ecs.getComponentMap<TextCom>(BuiltInComName.TEXT_PLAIN).get(e);
+            const pos = this.getComponent<Position>(e, BuiltInComName.POS);
+            const textCom = this.getComponent<TextCom>(e, BuiltInComName.TEXT_PLAIN);
 
             if (pos && textCom) {
                 this.screen.DrawPlainText(textCom.text, pos);
@@ -20,14 +20,12 @@ export class PlainRenderSystem extends System {
     }
 
     screen: PreScreen;
-    ecs: ECSManager;
 
     public constructor(
         screen: PreScreen,
         ecs: ECSManager,
     ) {
-        super();
-        this.ecs = ecs;
+        super(ecs);
         this.screen = screen;
     }
 }

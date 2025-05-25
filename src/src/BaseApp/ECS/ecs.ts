@@ -12,6 +12,16 @@ export abstract class System {
     public entities: Set<EntityId> = new Set();
 
     public abstract update(deltaTime: number): void;
+
+    protected ecs: ECSManager;
+
+    protected constructor(ecs: ECSManager) {
+        this.ecs = ecs;
+    }
+
+    protected getComponent<T>(entity: number, compType: string): T {
+        return this.ecs.getComponentMap<T>(compType).get(entity)!;
+    }
 }
 
 export class ECSManager {

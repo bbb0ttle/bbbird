@@ -1,7 +1,8 @@
 import { ECSManager, System} from "../../ECS/ecs.ts";
 import type {PreScreen} from "../../Core/Screen/preScreen.ts";
 import type {Position} from "../../Core/Screen/tyes.ts";
-import type {TextCom} from "../../Core/App";
+import {BuiltInComName} from "../../Components";
+import type {TextCom} from "../../Components/Rendering/TextComponent.ts";
 
 export class DotMatrixTextRenderSystem extends System {
     // @ts-ignore
@@ -9,8 +10,8 @@ export class DotMatrixTextRenderSystem extends System {
         this.screen.Clear();
 
         for (const e of this.entities) {
-            const pos = this.ecs.getComponentMap<Position>("position").get(e);
-            const textCom = this.ecs.getComponentMap<TextCom>("dottedText").get(e);
+            const pos = this.getComponent<Position>(e, BuiltInComName.POS)
+            const textCom = this.getComponent<TextCom>(e, BuiltInComName.TEXT_MAT);
 
             if (pos && textCom) {
                 this.screen.DrawText(textCom.text, pos);
@@ -19,14 +20,12 @@ export class DotMatrixTextRenderSystem extends System {
     }
 
     screen: PreScreen;
-    ecs: ECSManager;
 
     public constructor(
         screen: PreScreen,
         ecs: ECSManager,
     ) {
-        super();
-        this.ecs = ecs;
+        super(ecs);
         this.screen = screen;
     }
 }

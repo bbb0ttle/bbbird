@@ -5,6 +5,8 @@ import {DotMatrixTextRenderSystem} from "../../Systems/Rendering/DotMatrixTextRe
 import {PlainRenderSystem} from "../../Systems/Rendering/PlainTextRenderSystem.ts";
 import {BuiltInComName} from "../../Components";
 import type {TextCom} from "../../Components/Rendering/TextComponent.ts";
+import type {VelocityComponent} from "../../Components/Physic/VelocityComponent.ts";
+import {MovementSystem} from "../../Systems/Physic/MovementSystem.ts";
 
 export abstract class App {
     protected ecsManager: ECSManager = new ECSManager();
@@ -17,9 +19,15 @@ export abstract class App {
         this.ecsManager.registerComponentType<Position>(BuiltInComName.POS);
         this.ecsManager.registerComponentType<TextCom>(BuiltInComName.TEXT_PLAIN);
         this.ecsManager.registerComponentType<TextCom>(BuiltInComName.TEXT_MAT);
+        this.ecsManager.registerComponentType<VelocityComponent>(BuiltInComName.VEL);
     }
 
     private addBuiltInSystem() {
+        this.ecsManager.addSystem(new MovementSystem(this.ecsManager), [
+            BuiltInComName.POS,
+            BuiltInComName.VEL
+        ]);
+
         this.ecsManager.addSystem(new DotMatrixTextRenderSystem(
             this.screen,
             this.ecsManager
