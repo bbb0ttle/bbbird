@@ -65,11 +65,11 @@ export class PreScreen implements Screen {
 
   DrawPlainText(string: string, pos: Position,) {
     this.pixelWalker(target => {
-        const x = target.Pos.x - pos.x;
-        const y = target.Pos.y - pos.y;
+        const x = Math.ceil(target.Pos.x - pos.x);
+        const y = Math.ceil(target.Pos.y - pos.y);
 
         if (x >= 0 && x < string.length && y === 0) {
-            target.Shape = string[Math.floor(x)];
+            target.Shape = string[x];
         }
     })
   }
