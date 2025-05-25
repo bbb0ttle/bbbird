@@ -1,8 +1,7 @@
 import { ECSManager, System} from "../../ECS/ecs.ts";
 import type {PreScreen} from "../../Core/Screen/preScreen.ts";
 import type {Position} from "../../Core/Screen/tyes.ts";
-import {BuiltInComName} from "../../Components";
-import type {TextCom} from "../../Components/Rendering/TextComponent.ts";
+import {BuiltInComName, type TextCom} from "../../Components";
 
 export class PlainRenderSystem extends System {
     // @ts-ignore

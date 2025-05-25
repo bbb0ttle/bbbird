@@ -3,9 +3,16 @@ import {PreScreen} from "../Screen/preScreen.ts";
 import type {Picture, Position} from "../Screen/tyes.ts";
 import {DotMatrixTextRenderSystem} from "../../Systems/Rendering/DotMatrixTextRenderSystem.ts";
 import {PlainRenderSystem} from "../../Systems/Rendering/PlainTextRenderSystem.ts";
-import {BuiltInComName, type GravityComponent, type TextCom, type VelocityComponent} from "../../Components";
+import {
+    type AnimationComponent,
+    BuiltInComName,
+    type GravityComponent,
+    type TextCom,
+    type VelocityComponent
+} from "../../Components";
 import {MovementSystem} from "../../Systems/Physic/MovementSystem.ts";
 import {GravitySystem} from "../../Systems/Physic/GravitySystem.ts";
+import {AnimationRenderSystem} from "../../Systems/Rendering/AnimationRenderSystem.ts";
 
 export abstract class App {
     protected ecsManager: ECSManager = new ECSManager();
@@ -20,6 +27,7 @@ export abstract class App {
         this.ecsManager.registerComponentType<TextCom>(BuiltInComName.TEXT_MAT);
         this.ecsManager.registerComponentType<VelocityComponent>(BuiltInComName.VEL);
         this.ecsManager.registerComponentType<GravityComponent>(BuiltInComName.GRAVITY_ACCELERATION);
+        this.ecsManager.registerComponentType<AnimationComponent>(BuiltInComName.ANIMATION);
     }
 
     private addBuiltInSystem() {
@@ -48,6 +56,14 @@ export abstract class App {
             BuiltInComName.TEXT_PLAIN,
             BuiltInComName.POS,
         ]);
+
+        this.ecsManager.addSystem(new AnimationRenderSystem(
+            this.ecsManager,
+            this.screen
+        ), [
+            BuiltInComName.ANIMATION,
+            BuiltInComName.POS
+        ])
     }
 
     public abstract registerSystem(): void;

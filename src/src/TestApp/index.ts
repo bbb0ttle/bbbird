@@ -3,6 +3,8 @@ import {type FpsCom, FpsCompName} from "./Components/FpsComponent.ts";
 import {FPSSystem} from "./Systems/UI/FpsSystem.ts";
 import {App} from "../BaseApp/Core/App";
 import {BuiltInComName} from "../BaseApp/Components";
+import {createAnimation} from "./Entities/AnimationFactory.ts";
+import {BirdAnimation} from "./Assets/Animations/bird.ts";
 
 export class TestApp extends App {
     constructor() {
@@ -25,5 +27,10 @@ export class TestApp extends App {
             x: 0,
             y: 0
         })
+
+        createAnimation(this.ecsManager, BirdAnimation.IDLE, {
+            x: 4,
+            y: 4
+        });
     }
 }
