@@ -6,10 +6,12 @@ export class InputManager {
     private _keyPressed: Set<string> = new Set();
 
     private handleKeyDown = (event: KeyboardEvent) => {
+        console.log("Key pressed:", event.key);
         this._keyPressed.add(event.key);
     }
 
     private handleKeyUp = (event: KeyboardEvent) => {
+        console.log("Key up:", event.key);
         this._keyPressed.delete(event.key);
     }
 

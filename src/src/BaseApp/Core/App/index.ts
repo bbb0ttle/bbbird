@@ -16,7 +16,7 @@ import {AnimationRenderSystem} from "../../Systems/Rendering/AnimationRenderSyst
 
 export abstract class App {
     protected ecsManager: ECSManager = new ECSManager();
-    private screen: PreScreen = new PreScreen(70, 40);
+    private screen: PreScreen = new PreScreen(70, 35);
     private lastFrameTime: number = performance.now(); // 使用 performance.now() 获取高精度时间
     private animationFrameId: number | null = null; // 用于 requestAnimationFrame
 

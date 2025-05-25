@@ -5,6 +5,7 @@ import {App} from "../BaseApp/Core/App";
 import {BuiltInComName} from "../BaseApp/Components";
 import {createAnimation} from "./Entities/AnimationFactory.ts";
 import {BirdAnimation} from "./Assets/Animations/bird.ts";
+import {InputSystem} from "./Systems/Input/InputSystem.ts";
 
 export class TestApp extends App {
     constructor() {
@@ -13,6 +14,9 @@ export class TestApp extends App {
 
     public override registerSystem() {
         this.ecsManager.registerComponentType<FpsCom>(FpsCompName);
+        this.ecsManager.addSystem(new InputSystem(this.ecsManager), [
+            BuiltInComName.VEL
+        ])
         this.ecsManager.addSystem(new FPSSystem(this.ecsManager),[
             BuiltInComName.POS,
             BuiltInComName.TEXT_PLAIN,
@@ -30,7 +34,7 @@ export class TestApp extends App {
 
         createAnimation(this.ecsManager, BirdAnimation.IDLE, {
             x: 4,
-            y: 4
+            y: 14
         });
     }
 }
