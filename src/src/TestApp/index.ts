@@ -1,7 +1,8 @@
-import {App, BuiltInComName} from "../BaseApp/Core/App";
 import {createFpsEntity} from "./Entities/FpsFactory.ts";
 import {type FpsCom, FpsCompName} from "./Components/FpsComponent.ts";
 import {FPSSystem} from "./Systems/UI/FpsSystem.ts";
+import {App} from "../BaseApp/Core/App";
+import {BuiltInComName} from "../BaseApp/Components";
 
 export class TestApp extends App {
     constructor() {

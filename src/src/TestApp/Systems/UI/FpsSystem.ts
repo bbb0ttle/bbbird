@@ -1,6 +1,7 @@
 import {ECSManager, System} from "../../../BaseApp/ECS/ecs.ts";
-import {BuiltInComName, type TextCom} from "../../../BaseApp/Core/App";
 import {type FpsCom, FpsCompName} from "../../Components/FpsComponent.ts";
+import type {TextCom} from "../../../BaseApp/Components/Rendering/TextComponent.ts";
+import {BuiltInComName} from "../../../BaseApp/Components";
 
 export class FPSSystem extends System {
     update(deltaTime: number): void {
