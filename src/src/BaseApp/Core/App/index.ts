@@ -1,19 +1,10 @@
-import { ECSManager } from "./ecs.ts";
+import { ECSManager } from "../../ECS/ecs.ts";
 import {PreScreen} from "../Screen/preScreen.ts";
 import type {Picture, Position} from "../Screen/tyes.ts";
-import {DotMatrixTextRenderSystem} from "./RenderSystem/DotMatrixTextRenderSystem.ts";
-import {PlainRenderSystem} from "./RenderSystem/PlainTextRenderSystem.ts";
-
-export interface TextCom {
-    text: string;
-}
-
-export const BuiltInComName = {
-    PIC: "picture",
-    POS: "position",
-    TEXT_PLAIN: "text",
-    TEXT_MAT: "dotMatrixText",
-}
+import {DotMatrixTextRenderSystem} from "../../Systems/Rendering/DotMatrixTextRenderSystem.ts";
+import {PlainRenderSystem} from "../../Systems/Rendering/PlainTextRenderSystem.ts";
+import {BuiltInComName} from "../../Components";
+import type {TextCom} from "../../Components/Rendering/TextComponent.ts";
 
 export abstract class App {
     protected ecsManager: ECSManager = new ECSManager();

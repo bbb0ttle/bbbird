@@ -1,6 +1,6 @@
 import type {Font, Picture, Pixel, Position, Screen} from './tyes.ts';
 import { CharPixel } from './CharPixel.ts';
-import {BBF} from "../FontLib/bbf/bbf.ts";
+import {BBF} from "../../Assets/FontLib/bbf/bbf.ts";
 
 export class PreScreen implements Screen {
   pixels: CharPixel[][] = [];

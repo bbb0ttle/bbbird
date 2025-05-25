@@ -1,4 +1,4 @@
-import type {Font, Glyphs, Picture} from "../../Screen/tyes.ts";
+import type {Font, Glyphs, Picture} from "../../../Core/Screen/tyes.ts";
 import bbGlyphs from "./bbf.json";
 
 export const BBF: Font = {

@@ -1,11 +1,6 @@
-import {ECSManager, System} from "../../App/ecs.ts";
-import {BuiltInComName, type TextCom} from "../../App";
-
-export const FpsCompName = "fpsComp";
-
-export type FpsCom = {
-    value: number;
-}
+import {ECSManager, System} from "../../../BaseApp/ECS/ecs.ts";
+import {BuiltInComName, type TextCom} from "../../../BaseApp/Core/App";
+import {type FpsCom, FpsCompName} from "../../Components/FpsComponent.ts";
 
 export class FPSSystem extends System {
     update(deltaTime: number): void {
@@ -19,7 +14,6 @@ export class FPSSystem extends System {
                 fps.value = 1 / deltaTime;
                 textCom.text = `fps: ${fpsValue}`;
             }
-
         }
     }
 

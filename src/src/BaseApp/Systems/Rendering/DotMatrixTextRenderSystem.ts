@@ -1,7 +1,7 @@
-import { ECSManager, System} from "../ecs.ts";
-import type {PreScreen} from "../../Screen/preScreen.ts";
-import type {Position} from "../../Screen/tyes.ts";
-import type {TextCom} from "../index.ts";
+import { ECSManager, System} from "../../ECS/ecs.ts";
+import type {PreScreen} from "../../Core/Screen/preScreen.ts";
+import type {Position} from "../../Core/Screen/tyes.ts";
+import type {TextCom} from "../../Core/App";
 
 export class DotMatrixTextRenderSystem extends System {
     // @ts-ignore
