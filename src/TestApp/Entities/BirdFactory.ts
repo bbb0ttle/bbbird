@@ -16,7 +16,7 @@ export const createBird = (ecs: ECSManager) => {
         y: 14
     })
 
-    const initGravityScale = 0.5;
+    const initGravityScale = 0.2;
 
     const changeAnimation = (name: string) => {
         const animation = ecs.getComponentMap<AnimationComponent>(BuiltInComName.ANIMATION).get(bird);
@@ -35,7 +35,7 @@ export const createBird = (ecs: ECSManager) => {
             ecs.getComponent<GravityComponent>(bird, BuiltInComName.GRAVITY_ACCELERATION)!.scale = initGravityScale;
         },
         onFalling: () => {
-            changeAnimation("FALLING");
+            // changeAnimation("FALLING");
         }
     });
 
