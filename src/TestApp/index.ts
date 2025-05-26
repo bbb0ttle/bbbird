@@ -3,10 +3,9 @@ import {type FpsCom, FpsCompName} from "./Components/FpsComponent.ts";
 import {FPSSystem} from "./Systems/UI/FpsSystem.ts";
 import {App} from "../BaseApp/Core/App";
 import {BuiltInComName} from "../BaseApp/Components";
-import {createAnimation} from "./Entities/AnimationFactory.ts";
-import {BirdAnimation} from "./Assets/Animations/bird.ts";
 import {InputSystem} from "./Systems/Input/InputSystem.ts";
 import {createGround} from "./Entities/GroundFactory.ts";
+import {createBird} from "./Entities/BirdFactory.ts";
 
 export class TestApp extends App {
     constructor() {
@@ -33,10 +32,7 @@ export class TestApp extends App {
             y: 0
         })
 
-        createAnimation(this.ecsManager, BirdAnimation, "FLY", {
-            x: 4,
-            y: 14
-        });
+        createBird(this.ecsManager);
 
         createGround(this.ecsManager, [
             [":", ":", ":", ":", ":", ":", ":", ":", ":", ":"],
