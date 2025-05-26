@@ -1,3 +1,9 @@
-# pre-screen
+# BBBird
+a small ascii art game.
 
-[Edit in StackBlitz next generation editor ⚡️](https://stackblitz.com/~/github.com/bbb0ttle/pre-screen)
+```
+  |||
+ ('V')
+((___))
+  ^ ^
+```
