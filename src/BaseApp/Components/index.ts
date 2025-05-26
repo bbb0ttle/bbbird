@@ -9,7 +9,7 @@ export const BuiltInComName = {
     COLLISION: "collision",
 }
 
-export * from "./Physic/GravityComponent"
-export * from "./Physic/VelocityComponent"
+export * from "./Physic/GravityComponent.ts"
+export * from "./Physic/VelocityComponent.ts"
 export * from "./Rendering/TextComponent.ts"
 export * from "./Rendering/AnimationComponent.ts"

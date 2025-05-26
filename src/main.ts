@@ -1,4 +1,4 @@
-import { TestApp } from "./src/TestApp";
+import { TestApp } from "./TestApp";
 
 const a = new TestApp();
 a.start();
