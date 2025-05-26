@@ -6,6 +6,7 @@ import {BuiltInComName} from "../BaseApp/Components";
 import {InputSystem} from "./Systems/Input/InputSystem.ts";
 import {createGround} from "./Entities/GroundFactory.ts";
 import {createBird} from "./Entities/BirdFactory.ts";
+import {type InputComponent, InputCompName} from "./Components/InputComponent.ts";
 
 export class TestApp extends App {
     constructor() {
@@ -14,8 +15,10 @@ export class TestApp extends App {
 
     public override registerSystem() {
         this.ecsManager.registerComponentType<FpsCom>(FpsCompName);
+        this.ecsManager.registerComponentType<InputComponent>(InputCompName)
         this.ecsManager.addSystem(new InputSystem(this.ecsManager), [
-            BuiltInComName.VEL
+            BuiltInComName.VEL,
+            InputCompName
         ])
         this.ecsManager.addSystem(new FPSSystem(this.ecsManager),[
             BuiltInComName.POS,

@@ -3,8 +3,6 @@ import {ECSManager, type EntityId} from "../../BaseApp/ECS/ecs.ts";
 import {
     type AnimationComponent,
     BuiltInComName,
-    type GravityComponent,
-    type VelocityComponent
 } from "../../BaseApp/Components";
 
 export const createAnimation = (
@@ -22,15 +20,6 @@ export const createAnimation = (
     });
 
     ecs.addComponent<Position>(animationEntity, BuiltInComName.POS, pos);
-
-    ecs.addComponent<VelocityComponent>(animationEntity, BuiltInComName.VEL, {
-        vx: 0,
-        vy: 0
-    });
-
-    ecs.addComponent<GravityComponent>(animationEntity, BuiltInComName.GRAVITY_ACCELERATION, {
-        scale: 1.2
-    });
 
     return animationEntity;
 }

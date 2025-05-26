@@ -1,31 +1,44 @@
 import {type ECSManager, System} from "../../../BaseApp/ECS/ecs.ts";
 import {InputManager} from "../../../BaseApp/Core/InputManager";
 import {
-    type AnimationComponent,
     BuiltInComName,
-    type GravityComponent,
     type VelocityComponent
 } from "../../../BaseApp/Components";
+import {InputCompName, type InputComponent} from "../../Components/InputComponent.ts";
 
 export class InputSystem extends System {
     constructor(ecs: ECSManager) {
         super(ecs);
+
+        this.inputManager = new InputManager(this.handleKeyUp);
     }
 
-    private inputManager: InputManager = InputManager.getInst();
+    private handleKeyUp = (key: string): void => {
+        if (key === 'w') {
+            this._wUnPressed = true;
+        }
+    }
+
+    private _wUnPressed = false;
+
+    private inputManager: InputManager;
 
     update(_: number): void {
         for (const e of this.entities) {
             const vel = this.getComponent<VelocityComponent>(e, BuiltInComName.VEL);
-            if (vel) {
+            const input = this.getComponent<InputComponent>(e, InputCompName);
+            if (vel && input) {
                 if (this.inputManager.isKeyPressed('w')) {
                     vel.vy = -100; // 向上移动 (模拟跳跃)
 
-                    this.ecs.getComponentMap<AnimationComponent>(BuiltInComName.ANIMATION).get(e)!.currentAnimationName = "FLY"
-                    this.ecs.getComponent<GravityComponent>(e, BuiltInComName.GRAVITY_ACCELERATION)!.scale = 1.2;
-                } else {
-                    vel.vy = 0;
+                    input.onJump();
                 }
+            }
+
+            if (this._wUnPressed) {
+                vel.vy = 0;
+                this._wUnPressed = false;
+                input.onFalling();
             }
         }
     }
