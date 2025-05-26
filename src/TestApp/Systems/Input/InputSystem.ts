@@ -29,7 +29,7 @@ export class InputSystem extends System {
             const input = this.getComponent<InputComponent>(e, InputCompName);
             if (vel && input) {
                 if (this.inputManager.isKeyPressed('w')) {
-                    vel.vy = -100; // 向上移动 (模拟跳跃)
+                    vel.vy = -70; // 向上移动 (模拟跳跃)
 
                     input.onJump();
                 }
