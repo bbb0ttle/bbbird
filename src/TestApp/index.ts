@@ -37,9 +37,7 @@ export class TestApp extends App {
 
         createBird(this.ecsManager);
 
-        createGround(this.ecsManager, [
-            [":", ":", ":", ":", ":", ":", ":", ":", ":", ":"],
-        ], {
+        createGround(this.ecsManager, '""""""""""""""',{
             x: 0,
             y: 27
         })
