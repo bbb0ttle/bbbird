@@ -1,6 +1,6 @@
 import { ECSManager } from "../../ECS/ecs.ts";
 import {PreScreen} from "../Screen/preScreen.ts";
-import type {Picture, Position} from "../types.ts";
+import type {Picture, Position, Size} from "../types.ts";
 import {
     type AnimationComponent,
     BuiltInComName,
@@ -21,7 +21,7 @@ import {SystemRegistry} from "../../ECS/decoractors.ts";
 
 export abstract class App {
     protected ecsManager: ECSManager = new ECSManager();
-    private screen: PreScreen = new PreScreen(70, 35);
+    protected screen: PreScreen = new PreScreen(60, 55);
     private lastFrameTime: number = performance.now(); // 使用 performance.now() 获取高精度时间
     private animationFrameId: number | null = null; // 用于 requestAnimationFrame
 
@@ -34,6 +34,7 @@ export abstract class App {
         this.ecsManager.registerComponentType<GravityComponent>(BuiltInComName.GRAVITY_ACCELERATION);
         this.ecsManager.registerComponentType<AnimationComponent>(BuiltInComName.ANIMATION);
         this.ecsManager.registerComponentType<ColliderComponent>(BuiltInComName.COLLISION);
+        this.ecsManager.registerComponentType<Size>(BuiltInComName.SIZE);
     }
 
     private addBuiltInSystem() {

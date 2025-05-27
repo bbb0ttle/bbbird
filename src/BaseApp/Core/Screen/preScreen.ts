@@ -41,7 +41,7 @@ export class PreScreen implements Screen {
       const x = Math.floor(target.Pos.x - pos.x);
       const y = Math.floor(target.Pos.y - pos.y);
 
-      if (x >= 0 && x < picture[0].length && y >= 0 && y < picture.length) {
+      if (x >= 0 && x < picture[0]?.length && y >= 0 && y < picture.length) {
         target.Shape = picture[y][x];
       }
     });

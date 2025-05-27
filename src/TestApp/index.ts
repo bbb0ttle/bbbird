@@ -8,6 +8,8 @@ import * as BirdSystem from "./Systems/"
 import {createGround} from "./Entities/GroundFactory.ts";
 import {createBird} from "./Entities/BirdFactory.ts";
 import {type InputComponent, InputCompName} from "./Components/InputComponent.ts";
+import {createWallEntity} from "./Entities/WallFactory.ts";
+import {AutoRecycleComponent} from "./Components/AutoRecycleComponent.ts";
 
 export class TestApp extends App {
     constructor() {
@@ -17,6 +19,7 @@ export class TestApp extends App {
     public override registerSystem() {
         this.ecsManager.registerComponentType<FpsCom>(FpsCompName);
         this.ecsManager.registerComponentType<InputComponent>(InputCompName)
+        this.ecsManager.registerComponentType<AutoRecycleComponent>(AutoRecycleComponent.name)
     }
 
     override start() {
@@ -27,11 +30,16 @@ export class TestApp extends App {
             y: 0
         })
 
-        createBird(this.ecsManager);
+        createBird(this.ecsManager, this.screen);
 
-        createGround(this.ecsManager, '""""""""""""""',{
+        createGround(this.ecsManager, "'''''''''''''",{
             x: 0,
-            y: 27
+            y: this.screen.height - 2
         })
+
+        createWallEntity(
+            this.ecsManager,
+            this.screen,
+        )
     }
 }
