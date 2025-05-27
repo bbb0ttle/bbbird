@@ -7,21 +7,23 @@ import {AutoRecycleComponent} from "../Components/AutoRecycleComponent.ts";
 export const createWallEntity = (
     ecs: ECSManager,
     screen: PreScreen,
-    shape: string = "<",
+    shape: string = ".",
 ) => {
     const holeHeight = 15;
+    const wallWidth = 3;
 
     const totalVisibleHeight = screen.height - holeHeight;
     if (totalVisibleHeight <= 0) {
         throw new Error("Hole height is too large for the screen height.");
     }
+
     // random from 1 to totalVisibleHeight;
     const topWallHeight: number = Math.floor(Math.random() * (totalVisibleHeight - 1)) + 1;
     const bottomWallHeight: number = totalVisibleHeight - topWallHeight;
 
     const createWallByHeight = (h: number) => {
         const eid = ecs.createEntity();
-        const brick = [shape];
+        const brick = Array.from({ length: wallWidth}, () => shape);
         const wall = Array.from({ length: h }, () => brick);
 
         ecs.addComponent<Picture>(eid, BuiltInComName.PIC, wall);
@@ -38,23 +40,23 @@ export const createWallEntity = (
 
     const topWallEntity = createWallByHeight(topWallHeight);
     ecs.addComponent<Position>(topWallEntity, BuiltInComName.POS, {
-        x: screen.width - 1,
+        x: screen.width - wallWidth,
         y: 0
     });
 
     ecs.addComponent<Size>(topWallEntity, BuiltInComName.SIZE, {
         height: topWallHeight,
-        width: 1,
+        width: wallWidth,
     })
 
     const bottomWallEntity = createWallByHeight(bottomWallHeight);
     ecs.addComponent<Position>(bottomWallEntity, BuiltInComName.POS, {
-        x: screen.width - 1,
+        x: screen.width - wallWidth,
         y: topWallHeight + holeHeight
     });
 
     ecs.addComponent<Size>(bottomWallEntity, BuiltInComName.SIZE, {
         height: bottomWallHeight,
-        width: 1,
+        width: wallWidth,
     });
 }

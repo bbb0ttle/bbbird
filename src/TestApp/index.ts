@@ -10,6 +10,7 @@ import {createBird} from "./Entities/BirdFactory.ts";
 import {type InputComponent, InputCompName} from "./Components/InputComponent.ts";
 import {createWallEntity} from "./Entities/WallFactory.ts";
 import {AutoRecycleComponent} from "./Components/AutoRecycleComponent.ts";
+import {SpawnComponent} from "./Components/SpawnComponent.ts";
 
 export class TestApp extends App {
     constructor() {
@@ -20,6 +21,7 @@ export class TestApp extends App {
         this.ecsManager.registerComponentType<FpsCom>(FpsCompName);
         this.ecsManager.registerComponentType<InputComponent>(InputCompName)
         this.ecsManager.registerComponentType<AutoRecycleComponent>(AutoRecycleComponent.name)
+        SpawnComponent.register(this.ecsManager)
     }
 
     override start() {
@@ -37,9 +39,20 @@ export class TestApp extends App {
         //     y: this.screen.height - 2
         // })
 
-        createWallEntity(
-            this.ecsManager,
-            this.screen,
-        )
+        const walls = this.ecsManager.createEntity();
+        this.ecsManager.addComponent<SpawnComponent>(walls, SpawnComponent.name, {
+            onSpawn: () => {
+                createWallEntity(
+                    this.ecsManager,
+                    this.screen,
+                )
+
+                return 0
+            },
+            getNextSpawnTime: () => {
+                // random 1 to 3 seconds
+                return Math.random() * 2 + 1.2
+            }
+        });
     }
 }
