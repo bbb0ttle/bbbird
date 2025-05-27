@@ -19,7 +19,7 @@ export const createBird = (ecs: ECSManager, screen: PreScreen) => {
         width: 7,
         height: 4,
     }
-    const centerX = Math.floor((screen.width - birdSize.width) / 2) - birdSize.width;
+    const centerX = Math.floor((screen.width - birdSize.width) / 4);
     const bird = createAnimation(ecs,  BirdAnimation, "FLY", {
         x: centerX,
         y: 14
@@ -55,7 +55,6 @@ export const createBird = (ecs: ECSManager, screen: PreScreen) => {
     ecs.addComponent<AutoRecycleComponent>(bird, AutoRecycleComponent.name, {})
 
     ecs.addComponent<ColliderComponent>(bird, BuiltInComName.COLLISION, {
-        size: birdSize,
         onCollision: (_) => {
             // 取消重力加速度
             ecs.getComponentMap<GravityComponent>(BuiltInComName.GRAVITY_ACCELERATION).get(bird)!.scale = 0;

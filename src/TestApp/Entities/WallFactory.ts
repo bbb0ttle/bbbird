@@ -2,6 +2,7 @@ import type {Picture, Position, Size} from "../../BaseApp/Core/types.ts";
 import {ECSManager} from "../../BaseApp/ECS/ecs.ts";
 import type {PreScreen} from "../../BaseApp/Core/Screen/preScreen.ts";
 import {BuiltInComName, type VelocityComponent} from "../../BaseApp/Components";
+import {AutoRecycleComponent} from "../Components/AutoRecycleComponent.ts";
 
 export const createWallEntity = (
     ecs: ECSManager,
@@ -29,6 +30,8 @@ export const createWallEntity = (
             vx: -12,
             vy: 0
         })
+
+        ecs.addComponent<AutoRecycleComponent>(eid, AutoRecycleComponent.name, {});
 
         return eid;
     }

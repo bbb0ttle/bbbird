@@ -5,7 +5,7 @@ import {App} from "../BaseApp/Core/App";
 // @ts-ignore
 import * as BirdSystem from "./Systems/"
 
-import {createGround} from "./Entities/GroundFactory.ts";
+// import {createGround} from "./Entities/GroundFactory.ts";
 import {createBird} from "./Entities/BirdFactory.ts";
 import {type InputComponent, InputCompName} from "./Components/InputComponent.ts";
 import {createWallEntity} from "./Entities/WallFactory.ts";
@@ -32,10 +32,10 @@ export class TestApp extends App {
 
         createBird(this.ecsManager, this.screen);
 
-        createGround(this.ecsManager, "'''''''''''''",{
-            x: 0,
-            y: this.screen.height - 2
-        })
+        // createGround(this.ecsManager, "'''''''''''''",{
+        //     x: 0,
+        //     y: this.screen.height - 2
+        // })
 
         createWallEntity(
             this.ecsManager,
