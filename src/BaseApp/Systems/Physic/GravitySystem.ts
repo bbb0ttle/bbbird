@@ -1,6 +1,11 @@
-import {ECSManager, System} from "../../ECS/ecs.ts";
+import {System} from "../../ECS/ecs.ts";
 import {BuiltInComName, type GravityComponent, type VelocityComponent} from "../../Components";
+import {autoRegisterSys} from "../../ECS/decoractors.ts";
 
+@autoRegisterSys([
+    BuiltInComName.VEL,
+    BuiltInComName.GRAVITY_ACCELERATION
+])
 export class GravitySystem extends System {
     private readonly GRAVITY_ACCELERATION: number = 980;
 
@@ -15,9 +20,4 @@ export class GravitySystem extends System {
             }
         }
     }
-
-    constructor(ecs: ECSManager) {
-        super(ecs);
-    }
-
 }

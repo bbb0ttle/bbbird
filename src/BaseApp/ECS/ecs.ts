@@ -1,3 +1,5 @@
+import type {PreScreen} from "../Core/Screen/preScreen.ts";
+
 export type EntityId = number;
 
 export class EntityManager {
@@ -15,8 +17,11 @@ export abstract class System {
 
     protected ecs: ECSManager;
 
-    protected constructor(ecs: ECSManager) {
+    protected screen: PreScreen;
+
+    protected constructor(ecs: ECSManager, screen: PreScreen) {
         this.ecs = ecs;
+        this.screen = screen;
     }
 
     protected getComponent<T>(entity: number, compType: string): T {

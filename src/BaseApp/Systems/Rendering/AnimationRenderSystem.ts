@@ -1,8 +1,12 @@
-import {ECSManager, System} from "../../ECS/ecs.ts";
-import type {PreScreen} from "../../Core/Screen/preScreen.ts";
+import {System} from "../../ECS/ecs.ts";
 import {type AnimationComponent, BuiltInComName} from "../../Components";
 import type {Position} from "../../Core/types.ts";
+import {autoRegisterSys} from "../../ECS/decoractors.ts";
 
+@autoRegisterSys([
+    BuiltInComName.ANIMATION,
+    BuiltInComName.POS
+])
 export class AnimationRenderSystem extends System {
     private frameNum: number = 0;
 
@@ -25,15 +29,5 @@ export class AnimationRenderSystem extends System {
                 this.screen.DrawPicture(frames[currentFrame], position);
             }
         }
-    }
-
-    screen: PreScreen;
-
-    public constructor(
-        ecs: ECSManager,
-        screen: PreScreen
-    ) {
-        super(ecs);
-        this.screen = screen;
     }
 }

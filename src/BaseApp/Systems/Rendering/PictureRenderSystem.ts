@@ -1,8 +1,12 @@
-import {ECSManager, System} from "../../ECS/ecs.ts";
+import {System} from "../../ECS/ecs.ts";
 import type {Picture, Position} from "../../Core/types.ts";
 import {BuiltInComName} from "../../Components";
-import type {PreScreen} from "../../Core/Screen/preScreen.ts";
+import {autoRegisterSys} from "../../ECS/decoractors.ts";
 
+@autoRegisterSys([
+    BuiltInComName.POS,
+    BuiltInComName.PIC
+])
 export class PictureRenderSystem extends System {
     update(_: number): void {
         for (const e of this.entities) {
@@ -14,15 +18,4 @@ export class PictureRenderSystem extends System {
             }
         }
     }
-
-    screen: PreScreen;
-
-    public constructor(
-        screen: PreScreen,
-        ecs: ECSManager,
-    ) {
-        super(ecs);
-        this.screen = screen;
-    }
-
 }

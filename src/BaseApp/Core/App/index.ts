@@ -1,8 +1,6 @@
 import { ECSManager } from "../../ECS/ecs.ts";
 import {PreScreen} from "../Screen/preScreen.ts";
 import type {Picture, Position} from "../types.ts";
-import {DotMatrixTextRenderSystem} from "../../Systems/Rendering/DotMatrixTextRenderSystem.ts";
-import {PlainRenderSystem} from "../../Systems/Rendering/PlainTextRenderSystem.ts";
 import {
     type AnimationComponent,
     BuiltInComName,
@@ -10,12 +8,16 @@ import {
     type TextCom,
     type VelocityComponent
 } from "../../Components";
-import {MovementSystem} from "../../Systems/Physic/MovementSystem.ts";
-import {GravitySystem} from "../../Systems/Physic/GravitySystem.ts";
-import {AnimationRenderSystem} from "../../Systems/Rendering/AnimationRenderSystem.ts";
-import {CollisionSystem} from "../../Systems/Physic/CollisionSystem.ts";
 import type {ColliderComponent} from "../../Components/Physic/ColliderComponent.ts";
-import {PictureRenderSystem} from "../../Systems/Rendering/PictureRenderSystem.ts";
+
+// @ts-ignore
+import * as PhysicSystem from "../../Systems/Physic";
+
+// @ts-ignore
+import * as RenderSystem from "../../Systems/Rendering";
+
+import {SystemRegistry} from "../../ECS/decoractors.ts";
+
 
 export abstract class App {
     protected ecsManager: ECSManager = new ECSManager();
@@ -35,52 +37,11 @@ export abstract class App {
     }
 
     private addBuiltInSystem() {
-        this.ecsManager.addSystem(new GravitySystem(this.ecsManager), [
-            BuiltInComName.VEL,
-            BuiltInComName.GRAVITY_ACCELERATION
-        ])
-
-        this.ecsManager.addSystem(new CollisionSystem(this.ecsManager), [
-            BuiltInComName.COLLISION,
-            BuiltInComName.POS
-        ])
-
-        this.ecsManager.addSystem(new MovementSystem(this.ecsManager), [
-            BuiltInComName.POS,
-            BuiltInComName.VEL
-        ]);
-
-        this.ecsManager.addSystem(new DotMatrixTextRenderSystem(
-            this.screen,
-            this.ecsManager
-        ), [
-            BuiltInComName.TEXT_MAT,
-            BuiltInComName.POS
-        ]);
-
-        this.ecsManager.addSystem(new PlainRenderSystem(
-            this.screen,
-            this.ecsManager
-        ), [
-            BuiltInComName.TEXT_PLAIN,
-            BuiltInComName.POS,
-        ]);
-
-        this.ecsManager.addSystem(new AnimationRenderSystem(
-            this.ecsManager,
-            this.screen
-        ), [
-            BuiltInComName.ANIMATION,
-            BuiltInComName.POS
-        ]);
-
-        this.ecsManager.addSystem(new PictureRenderSystem(
-            this.screen,
-            this.ecsManager
-        ), [
-            BuiltInComName.PIC,
-            BuiltInComName.POS
-        ])
+        SystemRegistry.forEach((requiredComponents, s) => {
+            // @ts-ignore
+            const systemInst = new s(this.ecsManager, this.screen);
+            this.ecsManager.addSystem(systemInst, requiredComponents);
+        })
     }
 
     public abstract registerSystem(): void;
@@ -89,6 +50,8 @@ export abstract class App {
         const currentTime = window.performance.now();
         const deltaTime = (currentTime - this.lastFrameTime) / 1000.0;
         this.lastFrameTime = currentTime;
+
+        this.screen.Clear();
 
         this.ecsManager.update(deltaTime);
 

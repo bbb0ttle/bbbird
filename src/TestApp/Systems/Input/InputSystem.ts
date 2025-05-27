@@ -5,11 +5,16 @@ import {
     type VelocityComponent
 } from "../../../BaseApp/Components";
 import {InputCompName, type InputComponent} from "../../Components/InputComponent.ts";
+import {autoRegisterSys} from "../../../BaseApp/ECS/decoractors.ts";
+import type {PreScreen} from "../../../BaseApp/Core/Screen/preScreen.ts";
 
+@autoRegisterSys([
+    BuiltInComName.VEL,
+    InputCompName
+])
 export class InputSystem extends System {
-    constructor(ecs: ECSManager) {
-        super(ecs);
-
+    constructor(ecs: ECSManager, screen: PreScreen) {
+        super(ecs, screen);
         this.inputManager = new InputManager(this.handleKeyUp);
     }
 
@@ -35,7 +40,7 @@ export class InputSystem extends System {
                 }
             }
 
-            if (this._wUnPressed) {
+            if (this._wUnPressed && vel) {
                 vel.vy = 0;
                 this._wUnPressed = false;
                 input.onFalling();

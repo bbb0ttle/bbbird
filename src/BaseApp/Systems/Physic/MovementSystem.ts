@@ -1,8 +1,12 @@
-import {ECSManager, System} from "../../ECS/ecs.ts";
-import {BuiltInComName} from "../../Components";
+import {System} from "../../ECS/ecs.ts";
+import {BuiltInComName, type VelocityComponent} from "../../Components";
 import type {Position} from "../../Core/types.ts";
-import type {VelocityComponent} from "../../Components/Physic/VelocityComponent.ts";
+import {autoRegisterSys} from "../../ECS/decoractors.ts";
 
+@autoRegisterSys([
+    BuiltInComName.POS,
+    BuiltInComName.VEL,
+])
 export class MovementSystem extends System {
 
     update(deltaTime: number): void {
@@ -16,11 +20,4 @@ export class MovementSystem extends System {
             }
         }
     }
-
-    public constructor(
-        ecs: ECSManager,
-    ) {
-        super(ecs);
-    }
-
 }

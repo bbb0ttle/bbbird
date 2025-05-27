@@ -1,13 +1,14 @@
-import {ECSManager, System} from "../../ECS/ecs.ts";
+import {System} from "../../ECS/ecs.ts";
 import type {Position} from "../../Core/types.ts";
 import {BuiltInComName, type VelocityComponent} from "../../Components";
 import type {ColliderComponent} from "../../Components/Physic/ColliderComponent.ts";
+import {autoRegisterSys} from "../../ECS/decoractors.ts";
 
+@autoRegisterSys([
+    BuiltInComName.POS,
+    BuiltInComName.COLLISION
+])
 export class CollisionSystem extends System {
-    constructor(ecsManager: ECSManager) {
-        super(ecsManager);
-    }
-
     private getColliderComponents() {
         return Array.from(this.entities).filter(e => {
             return this.ecs.getComponentMap<Position>(BuiltInComName.POS).has(e)
