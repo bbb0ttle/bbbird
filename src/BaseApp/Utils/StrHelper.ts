@@ -3,8 +3,8 @@ import type {Picture} from "../Core/types.ts";
 export const trimMultilineStr = (str: string): string => {
     return str
         .split('\n')
-        .map(line => line.trimEnd())
-        .filter(line => line.length > 0)
+        // .map(line => line.trimEnd())
+        // .filter(line => line.length > 0)
         .join('\n');
 }
 

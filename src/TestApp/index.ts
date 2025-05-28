@@ -5,7 +5,7 @@ import {App} from "../BaseApp/Core/App";
 // @ts-ignore
 import * as BirdSystem from "./Systems/"
 
-// import {createGround} from "./Entities/GroundFactory.ts";
+import {createGround} from "./Entities/GroundFactory.ts";
 import {createBird} from "./Entities/BirdFactory.ts";
 import {type InputComponent, InputCompName} from "./Components/InputComponent.ts";
 import {createWallEntity} from "./Entities/WallFactory.ts";
@@ -34,12 +34,12 @@ export class TestApp extends App {
 
         createBird(this.ecsManager, this.screen);
 
-        // createGround(this.ecsManager, "'''''''''''''",{
-        //     x: 0,
-        //     y: this.screen.height - 2
-        // })
+        createGround(this.ecsManager, "''''''''''''''''''",{
+            x: 0,
+            y: this.screen.height / 2
+        })
 
-        const walls = this.ecsManager.createEntity();
+        /* const walls = this.ecsManager.createEntity();
         this.ecsManager.addComponent<SpawnComponent>(walls, SpawnComponent.name, {
             onSpawn: () => {
                 createWallEntity(
@@ -53,6 +53,6 @@ export class TestApp extends App {
                 // random 1 to 3 seconds
                 return Math.random() * 2 + 1.2
             }
-        });
+        }); */
     }
 }

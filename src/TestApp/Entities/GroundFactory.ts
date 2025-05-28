@@ -1,5 +1,5 @@
 import type {ECSManager} from "../../BaseApp/ECS/ecs.ts";
-import type {Picture, Position} from "../../BaseApp/Core/types.ts";
+import {type Size, type Picture, type Position} from "../../BaseApp/Core/types.ts";
 import {BuiltInComName} from "../../BaseApp/Components";
 import type {ColliderComponent} from "../../BaseApp/Components/Physic/ColliderComponent.ts";
 
@@ -10,13 +10,15 @@ export const createGround = (ecs: ECSManager, shape: string, pos: Position) => {
 
     ecs.addComponent<Picture>(groundEntity, BuiltInComName.PIC, [shape.split("")]);
 
+    ecs.addComponent<Size>(groundEntity, BuiltInComName.SIZE, {
+        width: shape.length,
+        height: 1,
+    });
+
     ecs.addComponent<ColliderComponent>(groundEntity, BuiltInComName.COLLISION, {
-        size: {
-            width: shape.length,
-            height: 1,
-        },
         onCollision: (_) => {
         }
     });
+
 
 }

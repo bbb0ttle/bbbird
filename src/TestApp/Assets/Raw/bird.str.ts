@@ -21,8 +21,9 @@ export const BirdStr3 = `
 \\('V')/
  (___) 
   ^ ^`;
+
 export const BirdStr4 = `
-  ///
- (xVx)
+  /||
+ (x_x)
 ((___))
   ^ ^`;

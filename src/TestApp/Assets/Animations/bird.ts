@@ -1,9 +1,9 @@
 import type {FramesAnimation, Picture} from "../../../BaseApp/Core/types.ts";
 import {multilineStrToPicture} from "../../../BaseApp/Utils/StrHelper.ts";
-import {BirdStr0, BirdStr1, BirdStr2, BirdStr3} from "../Raw/bird.str.ts";
+import * as rawStr from "../Raw/bird.str.ts";
 
-const normal: Picture = multilineStrToPicture(BirdStr0);
-const eyeClosed = multilineStrToPicture(BirdStr1);
+const normal: Picture = multilineStrToPicture(rawStr.BirdStr0);
+const eyeClosed = multilineStrToPicture(rawStr.BirdStr1);
 
 export const BirdAnimation: FramesAnimation = {
     IDLE: [
@@ -13,12 +13,15 @@ export const BirdAnimation: FramesAnimation = {
         eyeClosed
     ],
     FLY: [
-        multilineStrToPicture(BirdStr3),
-        multilineStrToPicture(BirdStr2),
-        multilineStrToPicture(BirdStr3),
-        multilineStrToPicture(BirdStr2),
+        multilineStrToPicture(rawStr.BirdStr3),
+        multilineStrToPicture(rawStr.BirdStr2),
+        multilineStrToPicture(rawStr.BirdStr3),
+        multilineStrToPicture(rawStr.BirdStr2),
     ],
     FALLING: [
-        multilineStrToPicture(BirdStr3),
+        multilineStrToPicture(rawStr.BirdStr3),
+    ],
+    DIED: [
+        multilineStrToPicture(rawStr.BirdStr4),
     ]
 }

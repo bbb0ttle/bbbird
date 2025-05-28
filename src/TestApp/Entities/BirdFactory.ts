@@ -27,10 +27,12 @@ export const createBird = (ecs: ECSManager, screen: PreScreen) => {
 
     const initGravityScale = 0.1;
 
-    const changeAnimation = (name: string) => {
+    const changeAnimation = (name: string, durationPerFrame: number = 0.25) => {
         const animation = ecs.getComponentMap<AnimationComponent>(BuiltInComName.ANIMATION).get(bird);
+    
         if (animation) {
             animation.currentAnimationName = name;
+            animation.frameDuration = durationPerFrame;
         }
     }
 
@@ -63,7 +65,7 @@ export const createBird = (ecs: ECSManager, screen: PreScreen) => {
             ecs.getComponentMap<VelocityComponent>(BuiltInComName.VEL).get(bird)!.vy = 0;
 
             // 待机
-            changeAnimation("IDLE")
+            changeAnimation("DIED", 0.1)
         }
     })
 
