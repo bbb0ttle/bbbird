@@ -52,7 +52,7 @@ export const createBird = (ecs: ECSManager, screen: PreScreen) => {
 
     ecs.addComponent<Size>(bird, BuiltInComName.SIZE, birdSize);
 
-    ecs.addComponent<AutoRecycleComponent>(bird, AutoRecycleComponent.name, {})
+    // ecs.addComponent<AutoRecycleComponent>(bird, AutoRecycleComponent.name, {})
 
     ecs.addComponent<ColliderComponent>(bird, BuiltInComName.COLLISION, {
         onCollision: (_) => {

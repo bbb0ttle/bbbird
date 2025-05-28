@@ -7,10 +7,10 @@ import {AutoRecycleComponent} from "../Components/AutoRecycleComponent.ts";
 export const createWallEntity = (
     ecs: ECSManager,
     screen: PreScreen,
-    shape: string = ".",
+    shape: string = "<",
 ) => {
     const holeHeight = 15;
-    const wallWidth = 3;
+    const wallWidth = 4;
 
     const totalVisibleHeight = screen.height - holeHeight;
     if (totalVisibleHeight <= 0) {

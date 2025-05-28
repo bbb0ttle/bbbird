@@ -19,7 +19,7 @@ export class InputSystem extends System {
     }
 
     private handleKeyUp = (key: string): void => {
-        if (key === 'w') {
+        if (key === ' ') {
             this._wUnPressed = true;
         }
     }
@@ -33,7 +33,7 @@ export class InputSystem extends System {
             const vel = this.getComponent<VelocityComponent>(e, BuiltInComName.VEL);
             const input = this.getComponent<InputComponent>(e, InputCompName);
             if (vel && input) {
-                if (this.inputManager.isKeyPressed('w')) {
+                if (this.inputManager.isKeyPressed(' ')) {
                     vel.vy = -1 * input.jumpStep; // 向上移动 (模拟跳跃)
 
                     input.onJump();
