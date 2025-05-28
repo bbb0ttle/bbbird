@@ -29,7 +29,7 @@ export const createWallEntity = (
         ecs.addComponent<Picture>(eid, BuiltInComName.PIC, wall);
 
         ecs.addComponent<VelocityComponent>(eid, BuiltInComName.VEL, {
-            vx: -12,
+            vx: -12.5,
             vy: 0
         })
 
