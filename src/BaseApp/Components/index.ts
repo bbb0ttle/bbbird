@@ -1,6 +1,4 @@
 export const BuiltInComName = {
-    TEXT_PLAIN: "text",
-    TEXT_MAT: "dotMatrixText",
     GRAVITY_ACCELERATION: "velocityAcceleration",
 }
 

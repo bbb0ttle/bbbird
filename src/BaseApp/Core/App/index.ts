@@ -3,7 +3,6 @@ import {PreScreen} from "../Screen/preScreen.ts";
 import {
     BuiltInComName,
     type GravityComponent,
-    type TextCom,
 } from "../../Components";
 
 // @ts-ignore
@@ -22,8 +21,6 @@ export abstract class App {
     private animationFrameId: number | null = null; // 用于 requestAnimationFrame
 
     protected constructor() {
-        this.ecsManager.registerComponentType<TextCom>(BuiltInComName.TEXT_PLAIN);
-        this.ecsManager.registerComponentType<TextCom>(BuiltInComName.TEXT_MAT);
         this.ecsManager.registerComponentType<GravityComponent>(BuiltInComName.GRAVITY_ACCELERATION);
     }
 
