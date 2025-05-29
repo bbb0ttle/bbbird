@@ -8,21 +8,17 @@ import type {ECSManager} from "../../BaseApp/ECS/ecs.ts";
 import {createAnimation} from "./AnimationFactory.ts";
 import {BirdAnimation} from "../Assets/Animations/bird.ts";
 import {InputComponent} from "../Components/InputComponent.ts";
-import {Size} from "../../BaseApp/Core/types.ts";
+import {Position, Size} from "../../BaseApp/Core/types.ts";
 import {AutoRecycleComponent} from "../Components/AutoRecycleComponent.ts";
 import type {PreScreen} from "../../BaseApp/Core/Screen/preScreen.ts";
 
-export const createBird = (ecs: ECSManager, screen: PreScreen) => {
+export const createBird = (ecs: ECSManager, screen: PreScreen, pos: Position) => {
 
     const birdSize = {
         width: 7,
         height: 5,
     }
-    const centerX = Math.floor((screen.width - birdSize.width) / 4);
-    const bird = createAnimation(ecs,  BirdAnimation, "FLY", {
-        x: centerX,
-        y: 0
-    })
+    const bird = createAnimation(ecs,  BirdAnimation, "FLY", pos)
 
     const initGravityScale = 0.1;
 
@@ -64,7 +60,7 @@ export const createBird = (ecs: ECSManager, screen: PreScreen) => {
             ecs.getComponentMap<VelocityComponent>(VelocityComponent.name).get(bird)!.vy = 0;
 
             // 待机
-            changeAnimation("IDLE", 0.25)
+            changeAnimation("IDLE", 0.5)
         }
     })
 
