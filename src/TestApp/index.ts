@@ -7,7 +7,7 @@ import * as BirdSystem from "./Systems/"
 
 import {createGround} from "./Entities/GroundFactory.ts";
 import {createBird} from "./Entities/BirdFactory.ts";
-import {InputComponent} from "./Components/InputComponent.ts";
+import {type InputComponent, InputCompName} from "./Components/InputComponent.ts";
 import {createWallEntity} from "./Entities/WallFactory.ts";
 import {AutoRecycleComponent} from "./Components/AutoRecycleComponent.ts";
 import {SpawnComponent} from "./Components/SpawnComponent.ts";
@@ -19,6 +19,8 @@ export class TestApp extends App {
 
     public override registerSystem() {
         this.ecsManager.registerComponentType<FpsCom>(FpsCompName);
+        this.ecsManager.registerComponentType<InputComponent>(InputCompName)
+        this.ecsManager.registerComponentType<AutoRecycleComponent>(AutoRecycleComponent.name)
         SpawnComponent.register(this.ecsManager)
     }
 

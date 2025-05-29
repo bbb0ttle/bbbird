@@ -8,7 +8,7 @@ import {
 import type {ECSManager} from "../../BaseApp/ECS/ecs.ts";
 import {createAnimation} from "./AnimationFactory.ts";
 import {BirdAnimation} from "../Assets/Animations/bird.ts";
-import {InputComponent} from "../Components/InputComponent.ts";
+import {InputCompName, type InputComponent} from "../Components/InputComponent.ts";
 import type {Size} from "../../BaseApp/Core/types.ts";
 import {AutoRecycleComponent} from "../Components/AutoRecycleComponent.ts";
 import type {PreScreen} from "../../BaseApp/Core/Screen/preScreen.ts";
@@ -40,7 +40,7 @@ export const createBird = (ecs: ECSManager, screen: PreScreen) => {
         scale: initGravityScale,
     });
 
-    ecs.addComponent<InputComponent>(bird, InputComponent.name, {
+    ecs.addComponent<InputComponent>(bird, InputCompName, {
         onJump: () => {
             changeAnimation("FLY")
             ecs.getComponent<GravityComponent>(bird, BuiltInComName.GRAVITY_ACCELERATION)!.scale = initGravityScale;
@@ -54,7 +54,7 @@ export const createBird = (ecs: ECSManager, screen: PreScreen) => {
 
     ecs.addComponent<Size>(bird, BuiltInComName.SIZE, birdSize);
 
-    ecs.addComponent<AutoRecycleComponent>(bird, AutoRecycleComponent.name, {})
+    // ecs.addComponent<AutoRecycleComponent>(bird, AutoRecycleComponent.name, {})
 
     ecs.addComponent<ColliderComponent>(bird, BuiltInComName.COLLISION, {
         onCollision: (_) => {
