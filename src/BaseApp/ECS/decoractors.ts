@@ -6,3 +6,9 @@ export const autoRegisterSys = (requiredComponents: string[]) => {
         SystemRegistry.set(target, requiredComponents);
     }
 }
+
+export const ComponentRegistry: Set<Function> = new Set();
+
+export const autoRegisterCom = (target: Function) => {
+    ComponentRegistry.add(target);
+}

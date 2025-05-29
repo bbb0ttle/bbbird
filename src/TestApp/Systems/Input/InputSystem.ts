@@ -4,13 +4,13 @@ import {
     BuiltInComName,
     type VelocityComponent
 } from "../../../BaseApp/Components";
-import {InputCompName, type InputComponent} from "../../Components/InputComponent.ts";
+import {InputComponent} from "../../Components/InputComponent.ts";
 import {autoRegisterSys} from "../../../BaseApp/ECS/decoractors.ts";
 import type {PreScreen} from "../../../BaseApp/Core/Screen/preScreen.ts";
 
 @autoRegisterSys([
     BuiltInComName.VEL,
-    InputCompName
+    InputComponent.name,
 ])
 export class InputSystem extends System {
     constructor(ecs: ECSManager, screen: PreScreen) {
@@ -31,7 +31,7 @@ export class InputSystem extends System {
     update(_: number): void {
         for (const e of this.entities) {
             const vel = this.getComponent<VelocityComponent>(e, BuiltInComName.VEL);
-            const input = this.getComponent<InputComponent>(e, InputCompName);
+            const input = this.getComponent<InputComponent>(e, InputComponent.name);
             if (vel && input) {
                 if (this.inputManager.isKeyPressed(' ')) {
                     vel.vy = -1 * input.jumpStep; // 向上移动 (模拟跳跃)

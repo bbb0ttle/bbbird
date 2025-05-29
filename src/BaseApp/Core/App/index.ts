@@ -16,7 +16,7 @@ import * as PhysicSystem from "../../Systems/Physic";
 // @ts-ignore
 import * as RenderSystem from "../../Systems/Rendering";
 
-import {SystemRegistry} from "../../ECS/decoractors.ts";
+import {ComponentRegistry, SystemRegistry} from "../../ECS/decoractors.ts";
 
 
 export abstract class App {
@@ -35,6 +35,12 @@ export abstract class App {
         this.ecsManager.registerComponentType<AnimationComponent>(BuiltInComName.ANIMATION);
         this.ecsManager.registerComponentType<ColliderComponent>(BuiltInComName.COLLISION);
         this.ecsManager.registerComponentType<Size>(BuiltInComName.SIZE);
+    }
+
+    private registerCom() {
+        ComponentRegistry.forEach((f: Function) => {
+            this.ecsManager.registerComponentType<typeof f>(f.name);
+        });
     }
 
     private addBuiltInSystem() {
@@ -60,6 +66,7 @@ export abstract class App {
     }
 
     public start() {
+        this.registerCom();
         this.registerSystem();
         this.addBuiltInSystem();
         this.animationFrameId = window.requestAnimationFrame(this.gameLoop);

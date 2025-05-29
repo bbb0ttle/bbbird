@@ -1,4 +1,5 @@
 import type {PreScreen} from "../Core/Screen/preScreen.ts";
+import type { ACom } from "./ACom.ts";
 
 export type EntityId = number;
 
