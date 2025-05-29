@@ -1,7 +1,8 @@
-export interface InputComponent {
-    onJump: () => void;
-    onFalling: () => void;
-    jumpStep: number
-}
+import { autoRegisterCom } from "../../BaseApp/ECS/decoractors";
 
-export const InputCompName = "inputComp";
+@autoRegisterCom
+export class InputComponent {
+    onJump: () => void = () => {};
+    onFalling: () => void = () => {};
+    jumpStep: number = 30;
+}

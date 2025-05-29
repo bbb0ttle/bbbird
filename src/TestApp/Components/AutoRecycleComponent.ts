@@ -1,4 +1,5 @@
-export class AutoRecycleComponent {
-    public static name = "AutoRecycleCom";
+import { autoRegisterCom } from "../../BaseApp/ECS/decoractors";
 
+@autoRegisterCom
+export class AutoRecycleComponent {
 }
