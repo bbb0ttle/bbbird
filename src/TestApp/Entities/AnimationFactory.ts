@@ -1,8 +1,7 @@
 import {type FramesAnimation, Position} from "../../BaseApp/Core/types.ts";
 import {ECSManager, type EntityId} from "../../BaseApp/ECS/ecs.ts";
 import {
-    type AnimationComponent,
-    BuiltInComName,
+    AnimationComponent,
 } from "../../BaseApp/Components";
 
 export const createAnimation = (
@@ -12,7 +11,7 @@ export const createAnimation = (
     pos: Position): EntityId => {
     const animationEntity: EntityId = ecs.createEntity();
 
-    ecs.addComponent<AnimationComponent>(animationEntity, BuiltInComName.ANIMATION, {
+    ecs.addComponent<AnimationComponent>(animationEntity, AnimationComponent.name, {
         animations: animation,
         frameDuration: 0.2,
         loop: true,

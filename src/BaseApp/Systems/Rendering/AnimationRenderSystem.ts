@@ -1,10 +1,10 @@
 import {System} from "../../ECS/ecs.ts";
-import {type AnimationComponent, BuiltInComName} from "../../Components";
+import {AnimationComponent} from "../../Components";
 import {Position} from "../../Core/types.ts";
 import {autoRegisterSys} from "../../ECS/decoractors.ts";
 
 @autoRegisterSys([
-    BuiltInComName.ANIMATION,
+    AnimationComponent.name,
     Position.name,
 ])
 export class AnimationRenderSystem extends System {
@@ -13,7 +13,7 @@ export class AnimationRenderSystem extends System {
     public update(deltaTime:number): void {
 
         for (const entity of this.entities) {
-            const animation = this.getComponent<AnimationComponent>(entity, BuiltInComName.ANIMATION);
+            const animation = this.getComponent<AnimationComponent>(entity, AnimationComponent.name);
             const position = this.getComponent<Position>(entity, Position.name);
 
             if (animation && position) {

@@ -1,6 +1,6 @@
 import {ColliderComponent} from "../../BaseApp/Components/Physic/ColliderComponent.ts";
 import {
-    type AnimationComponent,
+    AnimationComponent,
     BuiltInComName,
     type GravityComponent,
     VelocityComponent
@@ -28,7 +28,7 @@ export const createBird = (ecs: ECSManager, screen: PreScreen) => {
     const initGravityScale = 0.1;
 
     const changeAnimation = (name: string, durationPerFrame: number = 0.25) => {
-        const animation = ecs.getComponentMap<AnimationComponent>(BuiltInComName.ANIMATION).get(bird);
+        const animation = ecs.getComponentMap<AnimationComponent>(AnimationComponent.name).get(bird);
     
         if (animation) {
             animation.currentAnimationName = name;

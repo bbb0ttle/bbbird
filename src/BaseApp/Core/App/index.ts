@@ -1,7 +1,6 @@
 import { ECSManager } from "../../ECS/ecs.ts";
 import {PreScreen} from "../Screen/preScreen.ts";
 import {
-    type AnimationComponent,
     BuiltInComName,
     type GravityComponent,
     type TextCom,
@@ -26,7 +25,6 @@ export abstract class App {
         this.ecsManager.registerComponentType<TextCom>(BuiltInComName.TEXT_PLAIN);
         this.ecsManager.registerComponentType<TextCom>(BuiltInComName.TEXT_MAT);
         this.ecsManager.registerComponentType<GravityComponent>(BuiltInComName.GRAVITY_ACCELERATION);
-        this.ecsManager.registerComponentType<AnimationComponent>(BuiltInComName.ANIMATION);
     }
 
     private registerCom() {
