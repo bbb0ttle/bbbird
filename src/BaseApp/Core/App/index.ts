@@ -7,7 +7,6 @@ import {
     type GravityComponent,
     type TextCom,
 } from "../../Components";
-import type {ColliderComponent} from "../../Components/Physic/ColliderComponent.ts";
 
 // @ts-ignore
 import * as PhysicSystem from "../../Systems/Physic";
@@ -30,7 +29,6 @@ export abstract class App {
         this.ecsManager.registerComponentType<TextCom>(BuiltInComName.TEXT_MAT);
         this.ecsManager.registerComponentType<GravityComponent>(BuiltInComName.GRAVITY_ACCELERATION);
         this.ecsManager.registerComponentType<AnimationComponent>(BuiltInComName.ANIMATION);
-        this.ecsManager.registerComponentType<ColliderComponent>(BuiltInComName.COLLISION);
     }
 
     private registerCom() {

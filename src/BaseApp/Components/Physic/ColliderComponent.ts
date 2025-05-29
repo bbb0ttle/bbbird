@@ -1,5 +1,7 @@
 import type {EntityId} from "../../ECS/ecs.ts";
+import {autoRegisterCom} from "../../ECS/decoractors.ts";
 
-export interface ColliderComponent {
-    onCollision: (other: EntityId) => void;
+@autoRegisterCom
+export class ColliderComponent {
+    onCollision: (other: EntityId) => void = () => {};
 }

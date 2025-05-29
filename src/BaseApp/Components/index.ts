@@ -4,7 +4,6 @@ export const BuiltInComName = {
     TEXT_MAT: "dotMatrixText",
     GRAVITY_ACCELERATION: "velocityAcceleration",
     ANIMATION: "animation",
-    COLLISION: "collision",
 }
 
 export * from "./Physic/GravityComponent.ts"

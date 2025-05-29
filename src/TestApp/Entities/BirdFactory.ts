@@ -1,4 +1,4 @@
-import type {ColliderComponent} from "../../BaseApp/Components/Physic/ColliderComponent.ts";
+import {ColliderComponent} from "../../BaseApp/Components/Physic/ColliderComponent.ts";
 import {
     type AnimationComponent,
     BuiltInComName,
@@ -56,7 +56,7 @@ export const createBird = (ecs: ECSManager, screen: PreScreen) => {
 
     ecs.addComponent<AutoRecycleComponent>(bird, AutoRecycleComponent.name, {})
 
-    ecs.addComponent<ColliderComponent>(bird, BuiltInComName.COLLISION, {
+    ecs.addComponent<ColliderComponent>(bird, ColliderComponent.name, {
         onCollision: (_) => {
             // 取消重力加速度
             ecs.getComponentMap<GravityComponent>(BuiltInComName.GRAVITY_ACCELERATION).get(bird)!.scale = 0;

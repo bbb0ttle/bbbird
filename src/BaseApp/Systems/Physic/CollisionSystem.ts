@@ -1,19 +1,19 @@
 import {System} from "../../ECS/ecs.ts";
 import {Position, Size} from "../../Core/types.ts";
-import {BuiltInComName, VelocityComponent} from "../../Components";
-import type {ColliderComponent} from "../../Components/Physic/ColliderComponent.ts";
+import {VelocityComponent} from "../../Components";
+import {ColliderComponent} from "../../Components/Physic/ColliderComponent.ts";
 import {autoRegisterSys} from "../../ECS/decoractors.ts";
 
 @autoRegisterSys([
     Position.name,
     Size.name,
-    BuiltInComName.COLLISION,
+    ColliderComponent.name,
 ])
 export class CollisionSystem extends System {
     private getColliderComponents() {
         return Array.from(this.entities).filter(e => {
             return this.ecs.getComponentMap<Position>(Position.name).has(e)
-                && this.ecs.getComponentMap<ColliderComponent>(BuiltInComName.COLLISION).has(e)
+                && this.ecs.getComponentMap<ColliderComponent>(ColliderComponent.name).has(e)
         })
     }
 
@@ -25,7 +25,7 @@ export class CollisionSystem extends System {
             const entity1 = colliderComponents[i];
 
             const pos1 = this.getComponent<Position>(entity1, Position.name);
-            const collider1 = this.getComponent<ColliderComponent>(entity1, BuiltInComName.COLLISION);
+            const collider1 = this.getComponent<ColliderComponent>(entity1, ColliderComponent.name);
             const vel1 = this.getComponent<VelocityComponent>(entity1, VelocityComponent.name);
             const size1 = this.getComponent<Size>(entity1, Size.name);
 
@@ -33,7 +33,7 @@ export class CollisionSystem extends System {
                 const entity2 = colliderComponents[j];
 
                 const pos2 = this.getComponent<Position>(entity2, Position.name);
-                const collider2 = this.getComponent<ColliderComponent>(entity2, BuiltInComName.COLLISION);
+                const collider2 = this.getComponent<ColliderComponent>(entity2, ColliderComponent.name);
                 const size2 = this.getComponent<Size>(entity2, Size.name);
 
                 // AABB 碰撞检测
