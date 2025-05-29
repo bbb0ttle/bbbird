@@ -24,24 +24,24 @@ export class TestApp extends App {
         createPanel(
             this.ecsManager,
             this.screen,
-            "hello\nworld",
+            "press 'space' to start\npress 'space' to jump\n\nthat's all.",
             {
                 width: 50,
                 height: 8,
             }
         )
 
-        const walls = this.ecsManager.createEntity();
-        this.ecsManager.addComponent<SpawnComponent>(walls, SpawnComponent.name, {
-            onSpawn: () => {
-                createWallEntity(
-                    this.ecsManager,
-                    this.screen,
-                )
-            },
-            getSpawnInterval: () => {
-                return Math.random() * 2 + 1.2
-            }
-        });
+        // const walls = this.ecsManager.createEntity();
+        // this.ecsManager.addComponent<SpawnComponent>(walls, SpawnComponent.name, {
+        //     onSpawn: () => {
+        //         createWallEntity(
+        //             this.ecsManager,
+        //             this.screen,
+        //         )
+        //     },
+        //     getSpawnInterval: () => {
+        //         return Math.random() * 2 + 1.2
+        //     }
+        // });
     }
 }

@@ -1,13 +1,14 @@
-import {Picture, Position, type Size} from "../../BaseApp/Core/types.ts";
+import {Picture, Position, Size} from "../../BaseApp/Core/types.ts";
 import type {ECSManager} from "../../BaseApp/ECS/ecs.ts";
 import type {PreScreen} from "../../BaseApp/Core/Screen/preScreen.ts";
 import {UICom} from "../../BaseApp/Components/UI/PanelCom.ts";
+import {ColliderComponent} from "../../BaseApp/Components/Physic/ColliderComponent.ts";
 
 export const createPanel = (
     ecs: ECSManager,
     screen: PreScreen,
     content: string,
-    size: Size
+    size: Size,
 ) => {
     const panel = ecs.createEntity();
 
@@ -42,4 +43,8 @@ export const createPanel = (
     ]))
 
     ecs.addComponent(panel, Position.name, screen.GetCenterPosFor(size));
+
+    ecs.addComponent(panel, ColliderComponent.name, new ColliderComponent())
+
+    ecs.addComponent(panel, Size.name, size);
 }

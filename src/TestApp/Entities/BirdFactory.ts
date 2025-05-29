@@ -16,12 +16,12 @@ export const createBird = (ecs: ECSManager, screen: PreScreen) => {
 
     const birdSize = {
         width: 7,
-        height: 4,
+        height: 5,
     }
     const centerX = Math.floor((screen.width - birdSize.width) / 4);
     const bird = createAnimation(ecs,  BirdAnimation, "FLY", {
         x: centerX,
-        y: 14
+        y: 0
     })
 
     const initGravityScale = 0.1;
@@ -64,7 +64,7 @@ export const createBird = (ecs: ECSManager, screen: PreScreen) => {
             ecs.getComponentMap<VelocityComponent>(VelocityComponent.name).get(bird)!.vy = 0;
 
             // 待机
-            changeAnimation("DIED", 0.1)
+            changeAnimation("IDLE", 0.25)
         }
     })
 

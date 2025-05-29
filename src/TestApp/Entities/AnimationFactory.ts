@@ -13,7 +13,7 @@ export const createAnimation = (
 
     ecs.addComponent<AnimationComponent>(animationEntity, AnimationComponent.name, {
         animations: animation,
-        frameDuration: 0.2,
+        frameDuration: 0.25,
         loop: true,
         currentAnimationName: defaultName
     });

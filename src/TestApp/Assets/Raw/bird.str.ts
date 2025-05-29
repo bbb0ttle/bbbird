@@ -26,4 +26,4 @@ export const BirdStr4 = `
   /||
  (x_x)
 ((___))
-  ^ ^`;
+  ' '`;
