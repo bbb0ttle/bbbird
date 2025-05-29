@@ -1,8 +1,7 @@
 import {ColliderComponent} from "../../BaseApp/Components/Physic/ColliderComponent.ts";
 import {
     AnimationComponent,
-    BuiltInComName,
-    type GravityComponent,
+    GravityComponent,
     VelocityComponent
 } from "../../BaseApp/Components";
 import type {ECSManager} from "../../BaseApp/ECS/ecs.ts";
@@ -36,14 +35,14 @@ export const createBird = (ecs: ECSManager, screen: PreScreen) => {
         }
     }
 
-    ecs.addComponent<GravityComponent>(bird, BuiltInComName.GRAVITY_ACCELERATION, {
+    ecs.addComponent<GravityComponent>(bird, GravityComponent.name, {
         scale: initGravityScale,
     });
 
     ecs.addComponent<InputComponent>(bird, InputComponent.name, {
         onJump: () => {
             changeAnimation("FLY")
-            ecs.getComponent<GravityComponent>(bird, BuiltInComName.GRAVITY_ACCELERATION)!.scale = initGravityScale;
+            ecs.getComponent<GravityComponent>(bird, GravityComponent.name)!.scale = initGravityScale;
         },
         onFalling: () => {
             // changeAnimation("FALLING");
@@ -59,7 +58,7 @@ export const createBird = (ecs: ECSManager, screen: PreScreen) => {
     ecs.addComponent<ColliderComponent>(bird, ColliderComponent.name, {
         onCollision: (_) => {
             // 取消重力加速度
-            ecs.getComponentMap<GravityComponent>(BuiltInComName.GRAVITY_ACCELERATION).get(bird)!.scale = 0;
+            ecs.getComponentMap<GravityComponent>( GravityComponent.name).get(bird)!.scale = 0;
 
             // 取消速度
             ecs.getComponentMap<VelocityComponent>(VelocityComponent.name).get(bird)!.vy = 0;

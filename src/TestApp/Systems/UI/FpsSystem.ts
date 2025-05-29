@@ -1,6 +1,6 @@
 import {System} from "../../../BaseApp/ECS/ecs.ts";
 import {type FpsCom, FpsCompName} from "../../Components/FpsComponent.ts";
-import {TextCom} from "../../../BaseApp/Components/Rendering/TextComponent.ts";
+import {TextCom} from "../../../BaseApp/Components";
 import {autoRegisterSys} from "../../../BaseApp/ECS/decoractors.ts";
 import {Position} from "../../../BaseApp/Core/types.ts";
 

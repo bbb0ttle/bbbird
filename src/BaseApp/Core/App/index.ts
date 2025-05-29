@@ -1,9 +1,5 @@
 import { ECSManager } from "../../ECS/ecs.ts";
 import {PreScreen} from "../Screen/preScreen.ts";
-import {
-    BuiltInComName,
-    type GravityComponent,
-} from "../../Components";
 
 // @ts-ignore
 import * as PhysicSystem from "../../Systems/Physic";
@@ -19,10 +15,6 @@ export abstract class App {
     protected screen: PreScreen = new PreScreen(60, 55);
     private lastFrameTime: number = performance.now(); // 使用 performance.now() 获取高精度时间
     private animationFrameId: number | null = null; // 用于 requestAnimationFrame
-
-    protected constructor() {
-        this.ecsManager.registerComponentType<GravityComponent>(BuiltInComName.GRAVITY_ACCELERATION);
-    }
 
     private registerCom() {
         ComponentRegistry.forEach((f: Function) => {

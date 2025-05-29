@@ -1,7 +1,6 @@
 import {type ECSManager, System} from "../../../BaseApp/ECS/ecs.ts";
 import {InputManager} from "../../../BaseApp/Core/InputManager";
 import {
-    BuiltInComName,
     VelocityComponent
 } from "../../../BaseApp/Components";
 import {InputComponent} from "../../Components/InputComponent.ts";
