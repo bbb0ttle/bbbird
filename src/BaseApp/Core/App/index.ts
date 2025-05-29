@@ -30,8 +30,6 @@ export abstract class App {
         })
     }
 
-    public abstract registerSystem(): void;
-
     private gameLoop = () => {
         const currentTime = window.performance.now();
         const deltaTime = (currentTime - this.lastFrameTime) / 1000.0;
@@ -46,7 +44,6 @@ export abstract class App {
 
     public start() {
         this.registerCom();
-        this.registerSystem();
         this.addBuiltInSystem();
         this.animationFrameId = window.requestAnimationFrame(this.gameLoop);
     }

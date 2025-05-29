@@ -1,13 +1,8 @@
-import type {ECSManager, EntityId} from "../../BaseApp/ECS/ecs.ts";
+import {autoRegisterCom} from "../../BaseApp/ECS/decoractors.ts";
 
+@autoRegisterCom
 export class SpawnComponent {
-    public static name = "SpawnComponent";
+    public onSpawn: () => void = () => {};
 
-    public static register(ecs: ECSManager) {
-        ecs.registerComponentType<typeof this>(SpawnComponent.name)
-    }
-
-    public onSpawn: () => EntityId = () => -1;
-
-    public getNextSpawnTime: () => number = () => 0;
+    public getSpawnInterval: () => number = () => 0;
 }

@@ -1,6 +1,7 @@
-export const FpsCompName = "fpsComp";
+import {autoRegisterCom} from "../../BaseApp/ECS/decoractors.ts";
 
-export type FpsCom = {
-    value: number;
+@autoRegisterCom
+export class FpsCom {
+    value: number = 0;
 }
 

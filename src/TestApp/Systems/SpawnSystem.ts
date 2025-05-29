@@ -19,7 +19,7 @@ export class SpawnSystem extends System {
             if (spawnCom) {
                 this.interval -= deltaTime;
                 if (this.interval <= 0) {
-                    this.interval = spawnCom.getNextSpawnTime();
+                    this.interval = spawnCom.getSpawnInterval();
                     spawnCom.onSpawn();
                 }
             }
