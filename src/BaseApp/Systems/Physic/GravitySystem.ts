@@ -3,7 +3,7 @@ import {BuiltInComName, type GravityComponent, VelocityComponent} from "../../Co
 import {autoRegisterSys} from "../../ECS/decoractors.ts";
 
 @autoRegisterSys([
-    BuiltInComName.VEL,
+    VelocityComponent.name,
     BuiltInComName.GRAVITY_ACCELERATION
 ])
 export class GravitySystem extends System {

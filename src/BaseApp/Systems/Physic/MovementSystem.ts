@@ -5,7 +5,7 @@ import {autoRegisterSys} from "../../ECS/decoractors.ts";
 
 @autoRegisterSys([
     BuiltInComName.POS,
-    BuiltInComName.VEL,
+    VelocityComponent.name,
 ])
 export class MovementSystem extends System {
 
