@@ -6,7 +6,7 @@ const normal: Picture = multilineStrToPicture(rawStr.BirdStr0);
 const eyeClosed = multilineStrToPicture(rawStr.BirdStr1);
 
 export const BirdAnimation: FramesAnimation = {
-    IDLE: [
+    BLINK: [
         normal,
         normal,
         normal,

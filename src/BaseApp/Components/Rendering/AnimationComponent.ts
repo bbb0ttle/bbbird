@@ -5,4 +5,5 @@ export class AnimationComponent {
     loop: boolean = false; // 是否循环播放
     animations: FramesAnimation = {}
     currentAnimationName: string = "";
+    randomFrameDuration: boolean = false; // 是否随机帧间隔
 }

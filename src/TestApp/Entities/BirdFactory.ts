@@ -10,9 +10,8 @@ import {BirdAnimation} from "../Assets/Animations/bird.ts";
 import {InputComponent} from "../Components/InputComponent.ts";
 import {Position, Size} from "../../BaseApp/Core/types.ts";
 import {AutoRecycleComponent} from "../Components/AutoRecycleComponent.ts";
-import type {PreScreen} from "../../BaseApp/Core/Screen/preScreen.ts";
 
-export const createBird = (ecs: ECSManager, screen: PreScreen, pos: Position) => {
+export const createBird = (ecs: ECSManager, pos: Position) => {
 
     const birdSize = {
         width: 7,
@@ -28,6 +27,7 @@ export const createBird = (ecs: ECSManager, screen: PreScreen, pos: Position) =>
         if (animation) {
             animation.currentAnimationName = name;
             animation.frameDuration = durationPerFrame;
+            animation.randomFrameDuration = name == "BLINK"
         }
     }
 
@@ -59,8 +59,7 @@ export const createBird = (ecs: ECSManager, screen: PreScreen, pos: Position) =>
             // 取消速度
             ecs.getComponentMap<VelocityComponent>(VelocityComponent.name).get(bird)!.vy = 0;
 
-            // 待机
-            changeAnimation("IDLE", 0.5)
+            changeAnimation("BLINK", 0.4)
         }
     })
 

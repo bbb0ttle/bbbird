@@ -15,7 +15,8 @@ export const createAnimation = (
         animations: animation,
         frameDuration: 0.25,
         loop: true,
-        currentAnimationName: defaultName
+        currentAnimationName: defaultName,
+        randomFrameDuration: false
     });
 
     ecs.addComponent<Position>(animationEntity, Position.name, pos);

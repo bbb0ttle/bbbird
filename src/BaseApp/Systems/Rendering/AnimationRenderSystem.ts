@@ -2,6 +2,7 @@ import {System} from "../../ECS/ecs.ts";
 import {AnimationComponent} from "../../Components";
 import {Position} from "../../Core/types.ts";
 import {autoRegisterSys} from "../../ECS/decoractors.ts";
+import {random} from "../../Utils";
 
 @autoRegisterSys([
     AnimationComponent.name,
@@ -22,7 +23,14 @@ export class AnimationRenderSystem extends System {
                     continue; // 如果没有找到对应的帧，跳过当前实体
                 }
                 const frameCount = frames.length ?? 0;
-                this.frameNum += deltaTime / animation.frameDuration;
+
+                const minDuration = animation.frameDuration * 2 / 3;
+                const randDuration = random(minDuration, animation.frameDuration);
+                const duration = animation.randomFrameDuration
+                    ? randDuration
+                    : animation.frameDuration;
+
+                this.frameNum += deltaTime / duration;
                 const currentFrame = Math.floor(this.frameNum) % frameCount;
 
 

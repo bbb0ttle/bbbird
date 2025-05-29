@@ -19,7 +19,7 @@ export class TestApp extends App {
 
         createFpsEntity(this.ecsManager, {x: 0, y: 0})
 
-        createBird(this.ecsManager, this.screen, {
+        createBird(this.ecsManager, {
             x: 10,
             y: 0
         });
