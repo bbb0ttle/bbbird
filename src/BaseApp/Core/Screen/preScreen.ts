@@ -1,4 +1,4 @@
-import {type Font, Picture, type Pixel, type Position, type Screen} from '../types.ts';
+import {type Font, Picture, type Pixel, type Position, type Screen, Size} from '../types.ts';
 import { CharPixel } from './CharPixel.ts';
 import {BBF} from "../../Assets/FontLib/bbf/bbf.ts";
 
@@ -34,6 +34,13 @@ export class PreScreen implements Screen {
         target.Shape = p.Shape;
       }
     });
+  }
+
+  GetCenterPosFor(target: Size): Position {
+    const x = Math.floor((this.width - target.width) / 2);
+    const y = Math.floor((this.height - target.height) / 2);
+
+    return { x, y };
   }
 
   DrawPicture(pic: Picture, pos: Position) {

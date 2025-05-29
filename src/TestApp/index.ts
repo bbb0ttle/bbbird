@@ -4,10 +4,10 @@ import {App} from "../BaseApp/Core/App";
 // @ts-ignore
 import * as BirdSystem from "./Systems/"
 
-// import {createGround} from "./Entities/GroundFactory.ts";
 import {createBird} from "./Entities/BirdFactory.ts";
 import {SpawnComponent} from "./Components/SpawnComponent.ts";
 import {createWallEntity} from "./Entities/WallFactory.ts";
+import {createPanel} from "./Entities/PanelFactory.ts";
 
 export class TestApp extends App {
     constructor() {
@@ -17,17 +17,19 @@ export class TestApp extends App {
     override start() {
         super.start();
 
-        createFpsEntity(this.ecsManager, {
-            x: 0,
-            y: 0
-        })
+        createFpsEntity(this.ecsManager, {x: 0, y: 0})
 
         createBird(this.ecsManager, this.screen);
 
-        // createGround(this.ecsManager, "''''''''''''''''''",{
-        //     x: 0,
-        //     y: this.screen.height / 2
-        // })
+        createPanel(
+            this.ecsManager,
+            this.screen,
+            "hello\nworld",
+            {
+                width: 50,
+                height: 8,
+            }
+        )
 
         const walls = this.ecsManager.createEntity();
         this.ecsManager.addComponent<SpawnComponent>(walls, SpawnComponent.name, {
@@ -38,7 +40,6 @@ export class TestApp extends App {
                 )
             },
             getSpawnInterval: () => {
-                // random 1 to 3 seconds
                 return Math.random() * 2 + 1.2
             }
         });
