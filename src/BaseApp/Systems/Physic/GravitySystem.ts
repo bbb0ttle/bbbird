@@ -1,5 +1,5 @@
 import {System} from "../../ECS/ecs.ts";
-import {BuiltInComName, type GravityComponent, type VelocityComponent} from "../../Components";
+import {BuiltInComName, type GravityComponent, VelocityComponent} from "../../Components";
 import {autoRegisterSys} from "../../ECS/decoractors.ts";
 
 @autoRegisterSys([
@@ -11,7 +11,7 @@ export class GravitySystem extends System {
 
     override update(deltaTime: number) {
         for (const entity of this.entities) {
-            const vel = this.getComponent<VelocityComponent>(entity, BuiltInComName.VEL)
+            const vel = this.getComponent<VelocityComponent>(entity, VelocityComponent.name)
             const gravity = this.getComponent<GravityComponent>(entity, BuiltInComName.GRAVITY_ACCELERATION);
 
             if (vel) {

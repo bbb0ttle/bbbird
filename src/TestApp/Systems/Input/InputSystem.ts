@@ -2,14 +2,14 @@ import {type ECSManager, System} from "../../../BaseApp/ECS/ecs.ts";
 import {InputManager} from "../../../BaseApp/Core/InputManager";
 import {
     BuiltInComName,
-    type VelocityComponent
+    VelocityComponent
 } from "../../../BaseApp/Components";
 import {InputComponent} from "../../Components/InputComponent.ts";
 import {autoRegisterSys} from "../../../BaseApp/ECS/decoractors.ts";
 import type {PreScreen} from "../../../BaseApp/Core/Screen/preScreen.ts";
 
 @autoRegisterSys([
-    BuiltInComName.VEL,
+    VelocityComponent.name,
     InputComponent.name,
 ])
 export class InputSystem extends System {
@@ -30,7 +30,7 @@ export class InputSystem extends System {
 
     update(_: number): void {
         for (const e of this.entities) {
-            const vel = this.getComponent<VelocityComponent>(e, BuiltInComName.VEL);
+            const vel = this.getComponent<VelocityComponent>(e, VelocityComponent.name);
             const input = this.getComponent<InputComponent>(e, InputComponent.name);
             if (vel && input) {
                 if (this.inputManager.isKeyPressed(' ')) {

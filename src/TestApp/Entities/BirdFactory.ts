@@ -3,7 +3,7 @@ import {
     type AnimationComponent,
     BuiltInComName,
     type GravityComponent,
-    type VelocityComponent
+    VelocityComponent
 } from "../../BaseApp/Components";
 import type {ECSManager} from "../../BaseApp/ECS/ecs.ts";
 import {createAnimation} from "./AnimationFactory.ts";
@@ -62,14 +62,14 @@ export const createBird = (ecs: ECSManager, screen: PreScreen) => {
             ecs.getComponentMap<GravityComponent>(BuiltInComName.GRAVITY_ACCELERATION).get(bird)!.scale = 0;
 
             // 取消速度
-            ecs.getComponentMap<VelocityComponent>(BuiltInComName.VEL).get(bird)!.vy = 0;
+            ecs.getComponentMap<VelocityComponent>(VelocityComponent.name).get(bird)!.vy = 0;
 
             // 待机
             changeAnimation("DIED", 0.1)
         }
     })
 
-    ecs.addComponent<VelocityComponent>(bird, BuiltInComName.VEL, {
+    ecs.addComponent<VelocityComponent>(bird, VelocityComponent.name, {
         vx: 0,
         vy: 0
     });

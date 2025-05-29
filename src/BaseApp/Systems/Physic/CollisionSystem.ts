@@ -1,6 +1,6 @@
 import {System} from "../../ECS/ecs.ts";
 import type {Position, Size} from "../../Core/types.ts";
-import {BuiltInComName, type VelocityComponent} from "../../Components";
+import {BuiltInComName, VelocityComponent} from "../../Components";
 import type {ColliderComponent} from "../../Components/Physic/ColliderComponent.ts";
 import {autoRegisterSys} from "../../ECS/decoractors.ts";
 
@@ -26,7 +26,7 @@ export class CollisionSystem extends System {
 
             const pos1 = this.getComponent<Position>(entity1, BuiltInComName.POS);
             const collider1 = this.getComponent<ColliderComponent>(entity1, BuiltInComName.COLLISION);
-            const vel1 = this.getComponent<VelocityComponent>(entity1, BuiltInComName.VEL);
+            const vel1 = this.getComponent<VelocityComponent>(entity1, VelocityComponent.name);
             const size1 = this.getComponent<Size>(entity1, BuiltInComName.SIZE);
 
             for (let j = i + 1; j < colliderComponents.length; j++) {

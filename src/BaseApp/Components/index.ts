@@ -3,7 +3,6 @@ export const BuiltInComName = {
     POS: "position",
     TEXT_PLAIN: "text",
     TEXT_MAT: "dotMatrixText",
-    VEL: "velocity",
     GRAVITY_ACCELERATION: "velocityAcceleration",
     ANIMATION: "animation",
     COLLISION: "collision",
