@@ -1,18 +1,17 @@
 import {System} from "../../BaseApp/ECS/ecs.ts";
 import {autoRegisterSys} from "../../BaseApp/ECS/decoractors.ts";
-import {BuiltInComName} from "../../BaseApp/Components";
-import {Position, type Size} from "../../BaseApp/Core/types.ts";
+import {Position, Size} from "../../BaseApp/Core/types.ts";
 import {AutoRecycleComponent} from "../Components/AutoRecycleComponent.ts";
 
 @autoRegisterSys([
     Position.name,
-    BuiltInComName.SIZE
+    Size.name,
 ])
 export class AutoRecycleSystem extends System{
     public update(_: number): void {
         for (const e of this.entities) {
             const pos = this.getComponent<Position>(e, Position.name);
-            const size = this.getComponent<Size>(e, BuiltInComName.SIZE)
+            const size = this.getComponent<Size>(e, Size.name)
             const autoRecycle = this.getComponent<AutoRecycleSystem>(e, AutoRecycleComponent.name);
 
             if (pos && size && autoRecycle) {

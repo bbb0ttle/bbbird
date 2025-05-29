@@ -1,6 +1,6 @@
 import { ECSManager } from "../../ECS/ecs.ts";
 import {PreScreen} from "../Screen/preScreen.ts";
-import type {Picture, Size} from "../types.ts";
+import {type Picture} from "../types.ts";
 import {
     type AnimationComponent,
     BuiltInComName,
@@ -31,7 +31,6 @@ export abstract class App {
         this.ecsManager.registerComponentType<GravityComponent>(BuiltInComName.GRAVITY_ACCELERATION);
         this.ecsManager.registerComponentType<AnimationComponent>(BuiltInComName.ANIMATION);
         this.ecsManager.registerComponentType<ColliderComponent>(BuiltInComName.COLLISION);
-        this.ecsManager.registerComponentType<Size>(BuiltInComName.SIZE);
     }
 
     private registerCom() {

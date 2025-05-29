@@ -1,13 +1,13 @@
 import {System} from "../../ECS/ecs.ts";
-import {Position, type Size} from "../../Core/types.ts";
+import {Position, Size} from "../../Core/types.ts";
 import {BuiltInComName, VelocityComponent} from "../../Components";
 import type {ColliderComponent} from "../../Components/Physic/ColliderComponent.ts";
 import {autoRegisterSys} from "../../ECS/decoractors.ts";
 
 @autoRegisterSys([
     Position.name,
+    Size.name,
     BuiltInComName.COLLISION,
-    BuiltInComName.SIZE
 ])
 export class CollisionSystem extends System {
     private getColliderComponents() {
@@ -27,14 +27,14 @@ export class CollisionSystem extends System {
             const pos1 = this.getComponent<Position>(entity1, Position.name);
             const collider1 = this.getComponent<ColliderComponent>(entity1, BuiltInComName.COLLISION);
             const vel1 = this.getComponent<VelocityComponent>(entity1, VelocityComponent.name);
-            const size1 = this.getComponent<Size>(entity1, BuiltInComName.SIZE);
+            const size1 = this.getComponent<Size>(entity1, Size.name);
 
             for (let j = i + 1; j < colliderComponents.length; j++) {
                 const entity2 = colliderComponents[j];
 
                 const pos2 = this.getComponent<Position>(entity2, Position.name);
                 const collider2 = this.getComponent<ColliderComponent>(entity2, BuiltInComName.COLLISION);
-                const size2 = this.getComponent<Size>(entity2, BuiltInComName.SIZE);
+                const size2 = this.getComponent<Size>(entity2, Size.name);
 
                 // AABB 碰撞检测
                 if (pos1.x < pos2.x + size2.width &&

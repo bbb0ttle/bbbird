@@ -7,9 +7,9 @@ export interface Screen {
   pixels: Pixel[][];
 }
 
-export type Size = {
-    width: number;
-    height: number;
+export class Size {
+    width: number = 0;
+    height: number = 0;
 }
 
 @autoRegisterCom

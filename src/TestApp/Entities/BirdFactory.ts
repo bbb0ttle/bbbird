@@ -9,7 +9,7 @@ import type {ECSManager} from "../../BaseApp/ECS/ecs.ts";
 import {createAnimation} from "./AnimationFactory.ts";
 import {BirdAnimation} from "../Assets/Animations/bird.ts";
 import {InputComponent} from "../Components/InputComponent.ts";
-import type {Size} from "../../BaseApp/Core/types.ts";
+import {Size} from "../../BaseApp/Core/types.ts";
 import {AutoRecycleComponent} from "../Components/AutoRecycleComponent.ts";
 import type {PreScreen} from "../../BaseApp/Core/Screen/preScreen.ts";
 
@@ -52,7 +52,7 @@ export const createBird = (ecs: ECSManager, screen: PreScreen) => {
     });
 
 
-    ecs.addComponent<Size>(bird, BuiltInComName.SIZE, birdSize);
+    ecs.addComponent<Size>(bird, Size.name, birdSize);
 
     ecs.addComponent<AutoRecycleComponent>(bird, AutoRecycleComponent.name, {})
 

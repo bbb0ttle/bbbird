@@ -1,4 +1,4 @@
-import {type Picture, Position, type Size} from "../../BaseApp/Core/types.ts";
+import {type Picture, Position, Size} from "../../BaseApp/Core/types.ts";
 import {ECSManager} from "../../BaseApp/ECS/ecs.ts";
 import type {PreScreen} from "../../BaseApp/Core/Screen/preScreen.ts";
 import {BuiltInComName, VelocityComponent} from "../../BaseApp/Components";
@@ -44,7 +44,7 @@ export const createWallEntity = (
         y: 0
     });
 
-    ecs.addComponent<Size>(topWallEntity, BuiltInComName.SIZE, {
+    ecs.addComponent<Size>(topWallEntity, Size.name, {
         height: topWallHeight,
         width: wallWidth,
     })
@@ -55,7 +55,7 @@ export const createWallEntity = (
         y: topWallHeight + holeHeight
     });
 
-    ecs.addComponent<Size>(bottomWallEntity, BuiltInComName.SIZE, {
+    ecs.addComponent<Size>(bottomWallEntity, Size.name, {
         height: bottomWallHeight,
         width: wallWidth,
     });
