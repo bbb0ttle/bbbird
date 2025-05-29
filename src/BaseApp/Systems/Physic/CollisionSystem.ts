@@ -1,18 +1,18 @@
 import {System} from "../../ECS/ecs.ts";
-import type {Position, Size} from "../../Core/types.ts";
+import {Position, type Size} from "../../Core/types.ts";
 import {BuiltInComName, VelocityComponent} from "../../Components";
 import type {ColliderComponent} from "../../Components/Physic/ColliderComponent.ts";
 import {autoRegisterSys} from "../../ECS/decoractors.ts";
 
 @autoRegisterSys([
-    BuiltInComName.POS,
+    Position.name,
     BuiltInComName.COLLISION,
     BuiltInComName.SIZE
 ])
 export class CollisionSystem extends System {
     private getColliderComponents() {
         return Array.from(this.entities).filter(e => {
-            return this.ecs.getComponentMap<Position>(BuiltInComName.POS).has(e)
+            return this.ecs.getComponentMap<Position>(Position.name).has(e)
                 && this.ecs.getComponentMap<ColliderComponent>(BuiltInComName.COLLISION).has(e)
         })
     }
@@ -24,7 +24,7 @@ export class CollisionSystem extends System {
         for (let i = 0; i < colliderComponents.length; i++) {
             const entity1 = colliderComponents[i];
 
-            const pos1 = this.getComponent<Position>(entity1, BuiltInComName.POS);
+            const pos1 = this.getComponent<Position>(entity1, Position.name);
             const collider1 = this.getComponent<ColliderComponent>(entity1, BuiltInComName.COLLISION);
             const vel1 = this.getComponent<VelocityComponent>(entity1, VelocityComponent.name);
             const size1 = this.getComponent<Size>(entity1, BuiltInComName.SIZE);
@@ -32,7 +32,7 @@ export class CollisionSystem extends System {
             for (let j = i + 1; j < colliderComponents.length; j++) {
                 const entity2 = colliderComponents[j];
 
-                const pos2 = this.getComponent<Position>(entity2, BuiltInComName.POS);
+                const pos2 = this.getComponent<Position>(entity2, Position.name);
                 const collider2 = this.getComponent<ColliderComponent>(entity2, BuiltInComName.COLLISION);
                 const size2 = this.getComponent<Size>(entity2, BuiltInComName.SIZE);
 

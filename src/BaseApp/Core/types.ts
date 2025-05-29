@@ -1,3 +1,5 @@
+import {autoRegisterCom} from "../ECS/decoractors.ts";
+
 export interface Screen {
   width: number;
   height: number;
@@ -10,10 +12,11 @@ export type Size = {
     height: number;
 }
 
-export type Position = {
-  x: number;
-  y: number;
-};
+@autoRegisterCom
+export class Position {
+  x: number = 0;
+  y: number = 0;
+}
 
 export interface Pixel {
   Shape: string;

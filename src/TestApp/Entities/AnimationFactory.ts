@@ -1,4 +1,4 @@
-import type {FramesAnimation, Position} from "../../BaseApp/Core/types.ts";
+import {type FramesAnimation, Position} from "../../BaseApp/Core/types.ts";
 import {ECSManager, type EntityId} from "../../BaseApp/ECS/ecs.ts";
 import {
     type AnimationComponent,
@@ -19,7 +19,7 @@ export const createAnimation = (
         currentAnimationName: defaultName
     });
 
-    ecs.addComponent<Position>(animationEntity, BuiltInComName.POS, pos);
+    ecs.addComponent<Position>(animationEntity, Position.name, pos);
 
     return animationEntity;
 }
