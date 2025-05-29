@@ -1,4 +1,4 @@
-import type {Font, Glyphs, Picture} from "../../../Core/types.ts";
+import {type Font, type Glyphs, Picture} from "../../../Core/types.ts";
 import bbGlyphs from "./bbf.json";
 
 export const BBF: Font = {
@@ -9,18 +9,18 @@ export const BBF: Font = {
     Glyphs: bbGlyphs as Glyphs,
 
     GetChar(targetChar: string, shape: string): Picture {
+        const picture: Picture = new Picture();
         if (!this.Glyphs[targetChar]) {
-            return [];
+            return picture
         }
 
         const glyph = this.Glyphs[targetChar];
-        const picture: Picture = [];
         for (let i = 0; i < glyph.length; i++) {
             const row: string[] = [];
             for (let j = 0; j < glyph[i].length; j++) {
                 row.push(glyph[i][j] ? shape : ' ');
             }
-            picture.push(row);
+            picture.Pattern.push(row);
         }
         return picture;
     },

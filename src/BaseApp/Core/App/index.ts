@@ -1,6 +1,5 @@
 import { ECSManager } from "../../ECS/ecs.ts";
 import {PreScreen} from "../Screen/preScreen.ts";
-import {type Picture} from "../types.ts";
 import {
     type AnimationComponent,
     BuiltInComName,
@@ -24,7 +23,6 @@ export abstract class App {
     private animationFrameId: number | null = null; // 用于 requestAnimationFrame
 
     protected constructor() {
-        this.ecsManager.registerComponentType<Picture>(BuiltInComName.PIC);
         this.ecsManager.registerComponentType<TextCom>(BuiltInComName.TEXT_PLAIN);
         this.ecsManager.registerComponentType<TextCom>(BuiltInComName.TEXT_MAT);
         this.ecsManager.registerComponentType<GravityComponent>(BuiltInComName.GRAVITY_ACCELERATION);

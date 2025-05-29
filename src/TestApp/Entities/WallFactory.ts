@@ -1,7 +1,7 @@
-import {type Picture, Position, Size} from "../../BaseApp/Core/types.ts";
+import {Picture, Position, Size} from "../../BaseApp/Core/types.ts";
 import {ECSManager} from "../../BaseApp/ECS/ecs.ts";
 import type {PreScreen} from "../../BaseApp/Core/Screen/preScreen.ts";
-import {BuiltInComName, VelocityComponent} from "../../BaseApp/Components";
+import {VelocityComponent} from "../../BaseApp/Components";
 import {AutoRecycleComponent} from "../Components/AutoRecycleComponent.ts";
 
 export const createWallEntity = (
@@ -26,7 +26,7 @@ export const createWallEntity = (
         const brick = Array.from({ length: wallWidth}, () => shape);
         const wall = Array.from({ length: h }, () => brick);
 
-        ecs.addComponent<Picture>(eid, BuiltInComName.PIC, wall);
+        ecs.addComponent<Picture>(eid, Picture.name, new Picture(wall));
 
         ecs.addComponent<VelocityComponent>(eid, VelocityComponent.name, {
             vx: -12.5,

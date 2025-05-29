@@ -1,4 +1,4 @@
-import type {Picture} from "../Core/types.ts";
+import {Picture} from "../Core/types.ts";
 
 export const trimMultilineStr = (str: string): string => {
     return str
@@ -17,11 +17,11 @@ const getMaxLenStrInMultilineStr = (str: string): number => {
 export const multilineStrToPicture = (str: string): Picture => {
     const trimmedStr = trimMultilineStr(str);
     const maxLen = getMaxLenStrInMultilineStr(trimmedStr);
-    const picture: Picture = [];
+    const picture: Picture = new Picture();
 
     trimmedStr.split('\n').forEach(line => {
         const paddedLine = line.padEnd(maxLen, ' ');
-        picture.push(paddedLine.split(''));
+        picture.Pattern.push(paddedLine.split(''));
     });
 
     return picture;

@@ -23,7 +23,13 @@ export interface Pixel {
   Pos: Position;
 }
 
-export type Picture = string[][];
+@autoRegisterCom
+export class Picture {
+  public constructor(pattern: string[][] = []) {
+    this.Pattern = pattern;
+  }
+  Pattern: string[][] = [];
+}
 
 export type BinaryNum = 0 | 1;
 

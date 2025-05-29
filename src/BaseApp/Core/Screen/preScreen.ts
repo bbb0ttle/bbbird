@@ -1,4 +1,4 @@
-import type {Font, Picture, Pixel, Position, Screen} from '../types.ts';
+import {type Font, Picture, type Pixel, type Position, type Screen} from '../types.ts';
 import { CharPixel } from './CharPixel.ts';
 import {BBF} from "../../Assets/FontLib/bbf/bbf.ts";
 
@@ -36,7 +36,8 @@ export class PreScreen implements Screen {
     });
   }
 
-  DrawPicture(picture: Picture, pos: Position) {
+  DrawPicture(pic: Picture, pos: Position) {
+    const picture = pic.Pattern;
     this.pixelWalker(target => {
       const x = Math.floor(target.Pos.x - pos.x);
       const y = Math.floor(target.Pos.y - pos.y);

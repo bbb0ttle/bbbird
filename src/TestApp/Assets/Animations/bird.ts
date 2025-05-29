@@ -1,4 +1,4 @@
-import type {FramesAnimation, Picture} from "../../../BaseApp/Core/types.ts";
+import {type FramesAnimation, Picture} from "../../../BaseApp/Core/types.ts";
 import {multilineStrToPicture} from "../../../BaseApp/Utils/StrHelper.ts";
 import * as rawStr from "../Raw/bird.str.ts";
 

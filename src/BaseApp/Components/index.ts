@@ -1,5 +1,4 @@
 export const BuiltInComName = {
-    PIC: "picture",
     TEXT_PLAIN: "text",
     TEXT_MAT: "dotMatrixText",
     GRAVITY_ACCELERATION: "velocityAcceleration",
