@@ -22,7 +22,7 @@ export class InputManager {
 
     private _onKeyUp: (k: string) => void;
 
-    public constructor(onKeyUp: (k: string) => void) {
+    public constructor(onKeyUp: (k: string) => void = () => {}) {
         document.addEventListener('keydown', this.handleKeyDown);
 
         document.addEventListener('keyup', this.handleKeyUp);

@@ -23,7 +23,6 @@ export const BirdStr3 = `
   ^ ^`;
 
 export const BirdStr4 = `
-  /||
+  //_
  (x_x)
-((___))
-  ' '`;
+((___))`;
