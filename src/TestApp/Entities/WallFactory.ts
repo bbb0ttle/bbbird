@@ -76,12 +76,25 @@ export class WallFactory {
     private static instance: WallFactory;
     private constructor(ecs: ECSManager, screen: PreScreen) {
         this._ecs = ecs;
+        this._screen = screen;
         this._wallsEntity = ecs.createEntity();
-        this._ecs.addComponent<SpawnComponent>(this._wallsEntity, SpawnComponent.name, {
+
+        this.getSpawnComponent();
+    }
+
+
+
+    private _ecs: ECSManager;
+    private _screen: PreScreen;
+    private _wallsEntity: EntityId;
+    private _walls: EntityId[] = [];
+
+    private getSpawnComponent(): SpawnComponent | undefined {
+        return this._ecs.getOrAddComponent<SpawnComponent>(this._wallsEntity, SpawnComponent.name, {
             onSpawn: () => {
                 this._walls.push(...createWallEntity(
-                    ecs,
-                    screen,
+                    this._ecs,
+                    this._screen,
                 ));
             },
             started: false,
@@ -90,10 +103,6 @@ export class WallFactory {
             }
         });
     }
-
-    private _ecs: ECSManager;
-    private _wallsEntity: EntityId;
-    private _walls: EntityId[] = [];
 
     public destroy(): void {
         this._ecs.removeComponent(this._wallsEntity, SpawnComponent.name)
@@ -104,14 +113,14 @@ export class WallFactory {
     }
 
     public createWalls() {
-        const sCom = this._ecs.getComponent<SpawnComponent>(this._wallsEntity, SpawnComponent.name);
+        const sCom = this.getSpawnComponent();
         if (sCom) {
             sCom.started = true;
         }
     }
 
     public pause() {
-        const sCom = this._ecs.getComponent<SpawnComponent>(this._wallsEntity, SpawnComponent.name);
+        const sCom = this.getSpawnComponent();
         if (sCom) {
             sCom.started = false;
         }
