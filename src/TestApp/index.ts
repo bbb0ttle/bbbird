@@ -5,6 +5,7 @@ import {App} from "../BaseApp/Core/App";
 import * as BirdSystem from "./Systems/"
 import {createBird} from "./Entities/BirdFactory.ts";
 import {createPanel} from "./Entities/PanelFactory.ts";
+import {createGround} from "./Entities/GroundFactory.ts";
 
 export class TestApp extends App {
     constructor() {
@@ -23,7 +24,9 @@ export class TestApp extends App {
             {
                 width: 50,
                 height: 8,
-            }
+            },
+            true,
+
         )
 
         createBird(
@@ -31,10 +34,20 @@ export class TestApp extends App {
             this.screen,
             {
                 x: 10,
-                y: 0
+                y: 5
             },
             panel
         );
+
+        createGround(this.ecsManager, "-".repeat(this.screen.width), {
+            x: 0,
+            y: this.screen.height
+        })
+
+        createGround(this.ecsManager, "-".repeat(this.screen.width), {
+            x: 0,
+            y: -1,
+        })
 
     }
 }

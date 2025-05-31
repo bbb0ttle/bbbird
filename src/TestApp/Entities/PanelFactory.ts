@@ -3,12 +3,15 @@ import type {ECSManager, EntityId} from "../../BaseApp/ECS/ecs.ts";
 import type {PreScreen} from "../../BaseApp/Core/Screen/preScreen.ts";
 import {UICom} from "../../BaseApp/Components/UI/PanelCom.ts";
 import {ColliderComponent} from "../../BaseApp/Components/Physic/ColliderComponent.ts";
+import {strCompletion} from "../../BaseApp/Utils/StrHelper.ts";
 
 export const createPanel = (
     ecs: ECSManager,
     screen: PreScreen,
     content: string,
     size: Size,
+    collider: boolean,
+    title?: string
 ): EntityId => {
     const panel = ecs.createEntity();
 
@@ -20,13 +23,9 @@ export const createPanel = (
     const corner = "+";
 
     const middle = content.split("\n").map(line => {
-        const spaceWidth = size.width - line.length - 2;
-
-        const leftPadding = Math.floor(spaceWidth / 2);
-        const rightPadding = spaceWidth - leftPadding;
-
-        return "|" + " ".repeat(leftPadding) + line + " ".repeat(rightPadding) + "|";
+        return "|" + strCompletion(line, size.width - 2, " ") + "|";
     });
+
 
     const paddingTopLen = Math.floor((size.height - middle.length - 2) / 2);
     const paddingBottomLen = size.height - middle.length - 2 - paddingTopLen;
@@ -35,7 +34,7 @@ export const createPanel = (
     const paddingBottom = Array(paddingBottomLen).fill("|" + " ".repeat(size.width - 2) + "|");
 
     ecs.addComponent(panel, Picture.name, new Picture([
-        [corner, ...border, corner],
+        [corner, ...strCompletion(title ? `[ ${title} ]` : "", size.width - 2, "-"), corner],
         ...paddingTop,
         ...middle,
         ...paddingBottom,
@@ -44,9 +43,14 @@ export const createPanel = (
 
     ecs.addComponent(panel, Position.name, screen.GetCenterPosFor(size));
 
-    ecs.addComponent(panel, ColliderComponent.name, new ColliderComponent())
-
     ecs.addComponent(panel, Size.name, size);
+
+    if (collider) {
+        const c = new ColliderComponent();
+        c.fixed = true;
+        ecs.addComponent(panel, ColliderComponent.name, c)
+    }
+
 
     return panel;
 }

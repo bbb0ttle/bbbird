@@ -3,6 +3,7 @@ import {ECSManager} from "../../BaseApp/ECS/ecs.ts";
 import type {PreScreen} from "../../BaseApp/Core/Screen/preScreen.ts";
 import {VelocityComponent} from "../../BaseApp/Components";
 import {AutoRecycleComponent} from "../Components/AutoRecycleComponent.ts";
+import {ColliderComponent} from "../../BaseApp/Components/Physic/ColliderComponent.ts";
 
 export const createWallEntity = (
     ecs: ECSManager,
@@ -49,6 +50,10 @@ export const createWallEntity = (
         width: wallWidth,
     })
 
+    ecs.addComponent<ColliderComponent>(topWallEntity, ColliderComponent.name, {
+        onCollision: () => {}
+    })
+
     const bottomWallEntity = createWallByHeight(bottomWallHeight);
     ecs.addComponent<Position>(bottomWallEntity, Position.name, {
         x: screen.width - wallWidth,
@@ -59,4 +64,9 @@ export const createWallEntity = (
         height: bottomWallHeight,
         width: wallWidth,
     });
+    ecs.addComponent<ColliderComponent>(bottomWallEntity, ColliderComponent.name, {
+        onCollision: () => {}
+    })
+
+    return [topWallEntity, bottomWallEntity];
 }

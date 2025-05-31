@@ -28,3 +28,19 @@ export const multilineStrToPicture = (str: string): Picture => {
 
 }
 
+export const strCompletion = (originStr: string, targetLen: number, char: string) => {
+    if (originStr === undefined || originStr === "") {
+        return char.repeat(targetLen);
+    }
+
+    if (originStr.length >= targetLen) {
+        return originStr;
+    }
+
+    const spaceLen = targetLen - originStr.length;
+    const leftPadding = Math.floor(spaceLen / 2);
+    const rightPadding = spaceLen - leftPadding;
+
+    return char.repeat(leftPadding) + originStr + char.repeat(rightPadding);
+}
+

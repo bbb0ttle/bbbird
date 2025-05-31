@@ -52,18 +52,35 @@ export class CollisionSystem extends System {
 
                     if (overlapX < overlapY) { // 水平方向重叠较少，优先处理水平碰撞
                         if (pos1.x < pos2.x) { // entity1 在 entity2 左边
-                            pos1.x -= overlapX;
+                            if (collider1.fixed) {
+                                pos2.x += overlapX
+                            } else {
+                                pos1.x -= overlapX;
+                            }
                         } else { // entity1 在 entity2 右边
-                            pos1.x += overlapX;
+                            if (collider1.fixed) {
+                                pos2.x -= overlapX;
+                            } else {
+                                pos1.x += overlapX;
+                            }
                         }
-                        if (vel1) vel1.vx *= -0.5; // 减速反弹
+                        // if (vel1 && !collider1.fixed) vel1.vx *= -0.5; // 减速反弹
                     } else { // 垂直方向重叠较少，优先处理垂直碰撞
                         if (pos1.y < pos2.y) { // entity1 在 entity2 上面
-                            pos1.y -= overlapY;
+                            if (collider1.fixed) {
+                                pos2.y += overlapY;
+                            } else {
+                                pos1.y -= overlapY;
+                            }
                         } else { // entity1 在 entity2 下面
-                            pos1.y += overlapY;
+                            if (collider1.fixed) {
+                                pos2.y -= overlapY;
+                            } else {
+                                pos1.y += overlapY;
+                            }
                         }
-                        if (vel1) vel1.vy *= -0.5; // 减速反弹
+
+                        if (vel1 && !collider1.fixed) vel1.vy *= -0.5; // 减速反弹
                     }
 
                     collider1.onCollision(entity2);

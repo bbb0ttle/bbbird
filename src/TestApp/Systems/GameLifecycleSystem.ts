@@ -37,6 +37,11 @@ export class GameLifecycleSystem extends System {
                     stateCom.onEnterGameOver();
                 }
             }
+
+            if (stateCom.state == GameState.GameOver && this.inputManager.isKeyPressed("r")) {
+                stateCom.state = GameState.Playing;
+                stateCom.onEnterPlaying();
+            }
         }
     }
 }

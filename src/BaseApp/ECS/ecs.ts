@@ -25,7 +25,7 @@ export abstract class System {
     }
 
     protected getComponent<T>(entity: number, compType: string): T {
-        return this.ecs.getComponentMap<T>(compType).get(entity)!;
+        return this.ecs.getComponent<T>(entity, compType) as T;
     }
 }
 
@@ -75,6 +75,21 @@ export class ECSManager {
         this.updateSystemEntityLists(entity);
     }
 
+    public removeComponentsByType(componentType: string) {
+        if (!this.components.has(componentType)) {
+            console.warn(`Component type ${componentType} does not exist.`);
+            return;
+        }
+
+        const componentMap = this.components.get(componentType)!;
+        for (const entity of componentMap.keys()) {
+            componentMap.delete(entity);
+            this.entityComponentMasks.get(entity)?.delete(componentType);
+            this.updateSystemEntityLists(entity);
+        }
+
+    }
+
     public destroyEntity(entity: EntityId): void {
         for (const componentMap of this.components.values()) {
             componentMap.delete(entity);
@@ -92,6 +107,15 @@ export class ECSManager {
                 system.entities.add(entityId);
             }
         }
+    }
+
+    public destroyAllEntities(): void {
+        for (const entity of this.entityComponentMasks.keys()) {
+            this.destroyEntity(entity);
+        }
+        this.entityComponentMasks.clear();
+        this.components.clear();
+        this.systems.forEach(system => system.entities.clear());
     }
 
     private getRequiredComponents(sys: System): string[] {
@@ -114,6 +138,17 @@ export class ECSManager {
     public getComponentMap<T>(componentType: string): Map<EntityId, T> {
         const map = this.components.get(componentType);
         return map as Map<EntityId, T>;
+    }
+
+    public getOrAddComponent<T>(entity: EntityId, componentType: string, componentData: T): T {
+        const old = this.getComponent<T>(entity, componentType);
+
+        if (old == undefined) {
+            this.addComponent<T>(entity, componentType, componentData);
+            return componentData;
+        }
+
+        return old;
     }
 
     public update(deltaTime: number): void {
