@@ -59,10 +59,12 @@ const resetBird = (ecs: ECSManager, bird: EntityId, pos: Position) => {
 
     ecs.getOrAddComponent<VelocityComponent>(bird, VelocityComponent.name, {
         vx: 0,
-        vy: initVelocityY
+        vy: 0
     });
 
     ecs.getOrAddComponent<Size>(bird, Size.name, birdSize);
+
+    changeAnimation("BLINK", 0.4);
 
 }
 
@@ -72,6 +74,10 @@ export const createBird = (ecs: ECSManager, screen: PreScreen, pos: Position, pa
 
     const changeAnimation = createAnimationUpdater(ecs, bird);
 
+    const originPos = {
+        ...pos
+    }
+
     resetBird(ecs, bird, pos);
 
     ecs.addComponent<ColliderComponent>(bird, ColliderComponent.name, {
@@ -80,6 +86,13 @@ export const createBird = (ecs: ECSManager, screen: PreScreen, pos: Position, pa
 
             if (state === GameState.Init) {
                 changeAnimation("BLINK", 0.4)
+                const v = ecs.getOrAddComponent<VelocityComponent>(bird, VelocityComponent.name, {
+                    vx: 0,
+                    vy: 0
+                })
+
+                v.vy = 0;
+                ecs.removeComponent(bird, VelocityComponent.name);
             } else if (state === GameState.Playing) {
                 changeAnimation("DIED", 1);
                 const health = ecs.getComponentMap<HealthComponent>(HealthComponent.name).get(bird)!;
@@ -102,6 +115,16 @@ export const createBird = (ecs: ECSManager, screen: PreScreen, pos: Position, pa
             if (gameOverPanel) {
                 ecs.destroyEntity(gameOverPanel);
             }
+
+            pos.x = originPos.x;
+            pos.y = originPos.y;
+
+            const v = ecs.getOrAddComponent<VelocityComponent>(bird, VelocityComponent.name, {
+                vx: 0,
+                vy: 0
+            })
+
+            v.vy = 0;
 
             resetBird(ecs, bird, pos);
 

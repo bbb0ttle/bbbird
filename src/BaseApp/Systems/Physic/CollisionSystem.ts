@@ -35,6 +35,7 @@ export class CollisionSystem extends System {
                 const pos2 = this.getComponent<Position>(entity2, Position.name);
                 const collider2 = this.getComponent<ColliderComponent>(entity2, ColliderComponent.name);
                 const size2 = this.getComponent<Size>(entity2, Size.name);
+                const vel2 = this.getComponent<VelocityComponent>(entity2, VelocityComponent.name);
 
                 // AABB 碰撞检测
                 if (pos1.x < pos2.x + size2.width &&
@@ -52,35 +53,29 @@ export class CollisionSystem extends System {
 
                     if (overlapX < overlapY) { // 水平方向重叠较少，优先处理水平碰撞
                         if (pos1.x < pos2.x) { // entity1 在 entity2 左边
-                            if (collider1.fixed) {
-                                pos2.x += overlapX
-                            } else {
-                                pos1.x -= overlapX;
-                            }
+                            pos1.x -= overlapX;
                         } else { // entity1 在 entity2 右边
-                            if (collider1.fixed) {
-                                pos2.x -= overlapX;
-                            } else {
-                                pos1.x += overlapX;
-                            }
+                            pos1.x += overlapX;
                         }
-                        // if (vel1 && !collider1.fixed) vel1.vx *= -0.5; // 减速反弹
+                        if (vel1) vel1.vx *= -0.5; // 减速反弹
+
+                        if (vel2) {
+                            vel2.vx *= -0.7;
+                        }
                     } else { // 垂直方向重叠较少，优先处理垂直碰撞
                         if (pos1.y < pos2.y) { // entity1 在 entity2 上面
-                            if (collider1.fixed) {
-                                pos2.y += overlapY;
-                            } else {
-                                pos1.y -= overlapY;
-                            }
+                            pos1.y -= overlapY;
                         } else { // entity1 在 entity2 下面
-                            if (collider1.fixed) {
-                                pos2.y -= overlapY;
-                            } else {
-                                pos1.y += overlapY;
-                            }
+                            pos1.y += overlapY;
                         }
 
-                        if (vel1 && !collider1.fixed) vel1.vy *= -0.5; // 减速反弹
+                        if (vel1) {
+                            vel1.vy *= -0.5;
+                        }
+
+                        if (vel2) {
+                            vel2.vy *= -0.7;
+                        }
                     }
 
                     collider1.onCollision(entity2);

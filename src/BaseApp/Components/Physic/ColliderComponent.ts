@@ -5,4 +5,5 @@ import {autoRegisterCom} from "../../ECS/decoractors.ts";
 export class ColliderComponent {
     onCollision: (other: EntityId) => void = () => {};
     fixed?: boolean = false;
+    bounce?: boolean = false;
 }
