@@ -7,10 +7,9 @@ import {InputComponent} from "../Components/InputComponent.ts";
 import {Position, Size} from "../../BaseApp/Core/types.ts";
 import {HealthComponent} from "../Components/HelthComponent.ts";
 import {GameState, GameStateComponent} from "../Components/GameStateComponent.ts";
-import {SpawnComponent} from "../Components/SpawnComponent.ts";
-import {createWallEntity} from "./WallFactory.ts";
 import type {PreScreen} from "../../BaseApp/Core/Screen/preScreen.ts";
 import {createPanel} from "./PanelFactory.ts";
+import {WallFactory} from "./WallFactory.ts";
 
 const createAnimationUpdater = (ecs: ECSManager, bird: EntityId) => (name: string, durationPerFrame: number = 0.25) => {
     const animation = ecs.getComponentMap<AnimationComponent>(AnimationComponent.name).get(bird);
@@ -101,9 +100,6 @@ export const createBird = (ecs: ECSManager, screen: PreScreen, pos: Position, pa
         }
     })
 
-    const walls = ecs.createEntity();
-    const wallSet: EntityId[] = [];
-
     let gameOverPanel: EntityId;
 
     ecs.addComponent<GameStateComponent>(bird, GameStateComponent.name, {
@@ -116,6 +112,8 @@ export const createBird = (ecs: ECSManager, screen: PreScreen, pos: Position, pa
                 ecs.destroyEntity(gameOverPanel);
             }
 
+            WallFactory.GetInst(ecs, screen).createWalls();
+
             pos.x = originPos.x;
             pos.y = originPos.y;
 
@@ -127,29 +125,13 @@ export const createBird = (ecs: ECSManager, screen: PreScreen, pos: Position, pa
             v.vy = 0;
 
             resetBird(ecs, bird, pos);
-
-            ecs.addComponent<SpawnComponent>(walls, SpawnComponent.name, {
-                onSpawn: () => {
-                    wallSet.push(...createWallEntity(
-                        ecs,
-                        screen,
-                    ));
-                },
-                getSpawnInterval: () => {
-                    return Math.random() * 2 + 1.2
-                }
-            });
         },
         onEnterGameOver: () => {
-            ecs.removeComponent(walls, SpawnComponent.name)
-
-            wallSet.forEach((wall) => {
-                ecs.destroyEntity(wall)
-            })
-
             ecs.removeComponent(bird, InputComponent.name);
 
             changeAnimation("DIED", 1);
+
+            WallFactory.GetInst(ecs, screen).destroy();
 
             gameOverPanel = createPanel(
                 ecs,

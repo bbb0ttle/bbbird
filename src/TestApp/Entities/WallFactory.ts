@@ -1,11 +1,12 @@
 import {Picture, Position, Size} from "../../BaseApp/Core/types.ts";
-import {ECSManager} from "../../BaseApp/ECS/ecs.ts";
+import {ECSManager, type EntityId} from "../../BaseApp/ECS/ecs.ts";
 import type {PreScreen} from "../../BaseApp/Core/Screen/preScreen.ts";
 import {VelocityComponent} from "../../BaseApp/Components";
 import {AutoRecycleComponent} from "../Components/AutoRecycleComponent.ts";
 import {ColliderComponent} from "../../BaseApp/Components/Physic/ColliderComponent.ts";
+import {SpawnComponent} from "../Components/SpawnComponent.ts";
 
-export const createWallEntity = (
+const createWallEntity = (
     ecs: ECSManager,
     screen: PreScreen,
     shape: string = "<",
@@ -69,4 +70,58 @@ export const createWallEntity = (
     })
 
     return [topWallEntity, bottomWallEntity];
+}
+
+export class WallFactory {
+    private static instance: WallFactory;
+    private constructor(ecs: ECSManager, screen: PreScreen) {
+        this._ecs = ecs;
+        this._wallsEntity = ecs.createEntity();
+        this._ecs.addComponent<SpawnComponent>(this._wallsEntity, SpawnComponent.name, {
+            onSpawn: () => {
+                this._walls.push(...createWallEntity(
+                    ecs,
+                    screen,
+                ));
+            },
+            started: false,
+            getSpawnInterval: () => {
+                return Math.random() * 2 + 1.2
+            }
+        });
+    }
+
+    private _ecs: ECSManager;
+    private _wallsEntity: EntityId;
+    private _walls: EntityId[] = [];
+
+    public destroy(): void {
+        this._ecs.removeComponent(this._wallsEntity, SpawnComponent.name)
+
+        this._walls.forEach((wall) => {
+            this._ecs.destroyEntity(wall)
+        })
+    }
+
+    public createWalls() {
+        const sCom = this._ecs.getComponent<SpawnComponent>(this._wallsEntity, SpawnComponent.name);
+        if (sCom) {
+            sCom.started = true;
+        }
+    }
+
+    public pause() {
+        const sCom = this._ecs.getComponent<SpawnComponent>(this._wallsEntity, SpawnComponent.name);
+        if (sCom) {
+            sCom.started = false;
+        }
+    }
+
+    public static GetInst(ecs: ECSManager, screen: PreScreen): WallFactory {
+        if (!WallFactory.instance) {
+            WallFactory.instance = new WallFactory(ecs, screen);
+        }
+        return WallFactory.instance;
+
+    }
 }

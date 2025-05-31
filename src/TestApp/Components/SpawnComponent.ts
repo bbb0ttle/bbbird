@@ -5,4 +5,6 @@ export class SpawnComponent {
     public onSpawn: () => void = () => {};
 
     public getSpawnInterval: () => number = () => 0;
+
+    public started: boolean = false;
 }

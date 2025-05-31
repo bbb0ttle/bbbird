@@ -16,7 +16,7 @@ export class SpawnSystem extends System {
     update(deltaTime: number): void {
         for (const e of this.entities) {
             const spawnCom = this.getComponent<SpawnComponent>(e, SpawnComponent.name);
-            if (spawnCom) {
+            if (spawnCom && spawnCom.started) {
                 this.interval -= deltaTime;
                 if (this.interval <= 0) {
                     this.interval = spawnCom.getSpawnInterval();
