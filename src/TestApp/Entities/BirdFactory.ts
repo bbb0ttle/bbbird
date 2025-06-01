@@ -139,10 +139,12 @@ export const createBird = (ecs: ECSManager, screen: PreScreen, pos: Position, pa
 
             WallFactory.GetInst(ecs, screen).destroy();
 
+            const scoreCom = ecs.getComponent<ScoreUpdateComponent>(bird, ScoreUpdateComponent.name);
+
             gameOverPanel = createPanel(
                 ecs,
                 screen,
-                "Score: " + 0 + "\n\npress 'r' to restart",
+                "Score: " + (scoreCom?.Score ?? 0) + "\n\npress 'r' to restart",
                 {
                     width: 50,
                     height: 8,

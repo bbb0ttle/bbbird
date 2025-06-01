@@ -22,7 +22,7 @@ export class ScoreSystem extends System {
         for (const e of this.entities) {
             const scoreCom = this.ecs.getComponent<ScoreUpdateComponent>(e, ScoreUpdateComponent.name)
             const posCom = this.ecs.getComponent<Position>(e, Position.name)
-            if (!scoreCom || posCom) {
+            if (!scoreCom || !posCom) {
                 continue;
             }
 
