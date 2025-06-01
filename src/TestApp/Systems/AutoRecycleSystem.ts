@@ -15,7 +15,6 @@ export class AutoRecycleSystem extends System{
             const autoRecycle = this.getComponent<AutoRecycleSystem>(e, AutoRecycleComponent.name);
 
             if (pos && size && autoRecycle) {
-                // 如果实体的位置超出屏幕范围，则将其位置重置到屏幕中心
                 if (pos.x + size.width < 0
                     || pos.x - size.width > this.screen.width
                     || pos.y + size.height < 0

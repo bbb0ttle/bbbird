@@ -10,6 +10,7 @@ import {GameState, GameStateComponent} from "../Components/GameStateComponent.ts
 import type {PreScreen} from "../../BaseApp/Core/Screen/preScreen.ts";
 import {createPanel} from "./PanelFactory.ts";
 import {WallFactory} from "./WallFactory.ts";
+import {ScoreEntityType, ScoreUpdateComponent} from "../Components/ScoreUpdateComponent.ts";
 
 const createAnimationUpdater = (ecs: ECSManager, bird: EntityId) => (name: string, durationPerFrame: number = 0.25) => {
     const animation = ecs.getComponentMap<AnimationComponent>(AnimationComponent.name).get(bird);
@@ -40,6 +41,11 @@ const resetBird = (ecs: ECSManager, bird: EntityId, pos: Position) => {
     }).health = 1;
 
     const changeAnimation = createAnimationUpdater(ecs, bird);
+
+    ecs.getOrAddComponent<ScoreUpdateComponent>(bird, ScoreUpdateComponent.name, {
+        Type: ScoreEntityType.Bird,
+        Score: 0
+    }).Score = 0;
 
     ecs.getOrAddComponent<GravityComponent>(bird, GravityComponent.name, {
         scale: initGravityScale,

@@ -5,6 +5,7 @@ import {VelocityComponent} from "../../BaseApp/Components";
 import {AutoRecycleComponent} from "../Components/AutoRecycleComponent.ts";
 import {ColliderComponent} from "../../BaseApp/Components/Physic/ColliderComponent.ts";
 import {SpawnComponent} from "../Components/SpawnComponent.ts";
+import {ScoreEntityType, ScoreUpdateComponent} from "../Components/ScoreUpdateComponent.ts";
 
 const createWallEntity = (
     ecs: ECSManager,
@@ -68,6 +69,10 @@ const createWallEntity = (
     ecs.addComponent<ColliderComponent>(bottomWallEntity, ColliderComponent.name, {
         onCollision: () => {}
     })
+    ecs.addComponent<ScoreUpdateComponent>(bottomWallEntity, ScoreUpdateComponent.name, {
+        Type: ScoreEntityType.Wall,
+        Score: 0
+    })
 
     return [topWallEntity, bottomWallEntity];
 }
@@ -81,8 +86,6 @@ export class WallFactory {
 
         this.getSpawnComponent();
     }
-
-
 
     private _ecs: ECSManager;
     private _screen: PreScreen;

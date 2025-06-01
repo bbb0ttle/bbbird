@@ -55,6 +55,10 @@ export class ECSManager {
         this.components.set(componentType, new Map<EntityId, T>());
     }
 
+    public isEntityDestroyed(e: EntityId) {
+        return !this.entityComponentMasks.has(e);
+    }
+
     public addComponent<T>(entity: EntityId, componentType: string, componentData: T) {
         if (!this.components.has(componentType)) {
             this.registerComponentType<T>(componentType);
