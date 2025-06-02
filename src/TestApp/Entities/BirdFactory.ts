@@ -11,6 +11,7 @@ import type {PreScreen} from "../../BaseApp/Core/Screen/preScreen.ts";
 import {createPanel} from "./PanelFactory.ts";
 import {WallFactory} from "./WallFactory.ts";
 import {ScoreEntityType, ScoreUpdateComponent} from "../Components/ScoreUpdateComponent.ts";
+import {DeathComponent} from "../Components/DeathComponent.ts";
 
 const createAnimationUpdater = (ecs: ECSManager, bird: EntityId) => (name: string, durationPerFrame: number = 0.25) => {
     const animation = ecs.getComponentMap<AnimationComponent>(AnimationComponent.name).get(bird);
@@ -39,6 +40,13 @@ const resetBird = (ecs: ECSManager, bird: EntityId, pos: Position) => {
     ecs.getOrAddComponent<HealthComponent>(bird, HealthComponent.name, {
         health: 1
     }).health = 1;
+
+    ecs.getOrAddComponent<DeathComponent>(bird, DeathComponent.name, {
+        deathAnimation: "DIED",
+        componentsNeedToRemoveAfterDeath: [
+            InputComponent.name,
+        ]
+    })
 
     const changeAnimation = createAnimationUpdater(ecs, bird);
 
@@ -71,21 +79,7 @@ const resetBird = (ecs: ECSManager, bird: EntityId, pos: Position) => {
 
     changeAnimation("BLINK", 0.4);
 
-}
-
-export const createBird = (ecs: ECSManager, screen: PreScreen, pos: Position, panel: EntityId): EntityId => {
-
-    const bird = createAnimation(ecs,  BirdAnimation, "FLY", pos)
-
-    const changeAnimation = createAnimationUpdater(ecs, bird);
-
-    const originPos = {
-        ...pos
-    }
-
-    resetBird(ecs, bird, pos);
-
-    ecs.addComponent<ColliderComponent>(bird, ColliderComponent.name, {
+    ecs.getOrAddComponent<ColliderComponent>(bird, ColliderComponent.name, {
         collisionCount: 0,
         fixed: false,
         onCollision: (_) => {
@@ -104,7 +98,20 @@ export const createBird = (ecs: ECSManager, screen: PreScreen, pos: Position, pa
                 changeAnimation("DIED", 1);
             }
         }
-    })
+    }).collisionCount = 0
+
+
+}
+
+export const createBird = (ecs: ECSManager, screen: PreScreen, pos: Position, panel: EntityId): EntityId => {
+
+    const bird = createAnimation(ecs,  BirdAnimation, "FLY", pos)
+
+    const originPos = {
+        ...pos
+    }
+
+    resetBird(ecs, bird, pos);
 
     let gameOverPanel: EntityId;
 
@@ -133,10 +140,6 @@ export const createBird = (ecs: ECSManager, screen: PreScreen, pos: Position, pa
             resetBird(ecs, bird, pos);
         },
         onEnterGameOver: () => {
-            ecs.removeComponent(bird, InputComponent.name);
-
-            changeAnimation("DIED", 1);
-
             WallFactory.GetInst(ecs, screen).destroy();
 
             const scoreCom = ecs.getComponent<ScoreUpdateComponent>(bird, ScoreUpdateComponent.name);
