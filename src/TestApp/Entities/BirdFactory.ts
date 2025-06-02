@@ -12,6 +12,7 @@ import {createPanel} from "./PanelFactory.ts";
 import {WallFactory} from "./WallFactory.ts";
 import {ScoreEntityType, ScoreUpdateComponent} from "../Components/ScoreUpdateComponent.ts";
 import {DeathComponent} from "../Components/DeathComponent.ts";
+import {PressRecycleComponent} from "../Components/PressRecycleComponent.ts";
 
 const createAnimationUpdater = (ecs: ECSManager, bird: EntityId) => (name: string, durationPerFrame: number = 0.25) => {
     const animation = ecs.getComponentMap<AnimationComponent>(AnimationComponent.name).get(bird);
@@ -103,7 +104,7 @@ const resetBird = (ecs: ECSManager, bird: EntityId, pos: Position) => {
 
 }
 
-export const createBird = (ecs: ECSManager, screen: PreScreen, pos: Position, panel: EntityId): EntityId => {
+export const createBird = (ecs: ECSManager, screen: PreScreen, pos: Position): EntityId => {
 
     const bird = createAnimation(ecs,  BirdAnimation, "FLY", pos)
 
@@ -113,18 +114,10 @@ export const createBird = (ecs: ECSManager, screen: PreScreen, pos: Position, pa
 
     resetBird(ecs, bird, pos);
 
-    let gameOverPanel: EntityId;
-
     ecs.addComponent<GameStateComponent>(bird, GameStateComponent.name, {
         state: GameState.Init,
         score: 0,
         onEnterPlaying: () => {
-            ecs.destroyEntity(panel);
-
-            if (gameOverPanel) {
-                ecs.destroyEntity(gameOverPanel);
-            }
-
             WallFactory.GetInst(ecs, screen).createWalls();
 
             pos.x = originPos.x;
@@ -144,20 +137,30 @@ export const createBird = (ecs: ECSManager, screen: PreScreen, pos: Position, pa
 
             const scoreCom = ecs.getComponent<ScoreUpdateComponent>(bird, ScoreUpdateComponent.name);
 
-            gameOverPanel = createPanel(
-                ecs,
-                screen,
-                "Score: " + (scoreCom?.Score ?? 0) + "\n\npress 'r' to restart",
-                {
-                    width: 50,
-                    height: 8,
-                },
-                false,
-                "Game Over"
-            )
+            createGameOverPanel(ecs, screen, scoreCom ? scoreCom.Score : 0);
         }
     })
 
     return bird;
 
+}
+
+const createGameOverPanel = (ecs: ECSManager, screen: PreScreen, score: number): EntityId => {
+    const panel =createPanel(
+        ecs,
+        screen,
+        "Game Over\n\nScore: " + score + "\n\nPress 'r' to restart",
+        {
+            width: 50,
+            height: 8,
+        },
+        false,
+        "Game Over"
+    );
+
+    ecs.addComponent<PressRecycleComponent>(panel, PressRecycleComponent.name, {
+        pressedKey: new Set("r"),
+    })
+
+    return panel;
 }
