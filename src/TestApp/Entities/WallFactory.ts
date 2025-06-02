@@ -53,7 +53,9 @@ const createWallEntity = (
     })
 
     ecs.addComponent<ColliderComponent>(topWallEntity, ColliderComponent.name, {
-        onCollision: () => {}
+        onCollision: () => {},
+        collisionCount: 0,
+        fixed: true,
     })
 
     const bottomWallEntity = createWallByHeight(bottomWallHeight);
@@ -67,7 +69,9 @@ const createWallEntity = (
         width: wallWidth,
     });
     ecs.addComponent<ColliderComponent>(bottomWallEntity, ColliderComponent.name, {
-        onCollision: () => {}
+        onCollision: () => {},
+        collisionCount: 0,
+        fixed: true,
     })
     ecs.addComponent<ScoreUpdateComponent>(bottomWallEntity, ScoreUpdateComponent.name, {
         Type: ScoreEntityType.Wall,

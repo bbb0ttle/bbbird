@@ -39,12 +39,12 @@ export class TestApp extends App {
             panel
         );
 
-        createGround(this.ecsManager, "-".repeat(this.screen.width), {
+        createGround(this.ecsManager, "*".repeat(this.screen.width), {
             x: 0,
             y: this.screen.height
         })
 
-        createGround(this.ecsManager, "-".repeat(this.screen.width), {
+        createGround(this.ecsManager, "*".repeat(this.screen.width), {
             x: 0,
             y: -1,
         })

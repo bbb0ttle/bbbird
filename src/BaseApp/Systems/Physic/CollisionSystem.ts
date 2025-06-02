@@ -1,8 +1,15 @@
-import {System} from "../../ECS/ecs.ts";
+import {type EntityId, System} from "../../ECS/ecs.ts";
 import {Position, Size} from "../../Core/types.ts";
 import {VelocityComponent} from "../../Components";
 import {ColliderComponent} from "../../Components/Physic/ColliderComponent.ts";
 import {autoRegisterSys} from "../../ECS/decoractors.ts";
+
+interface CollisionInfo {
+    pos: Position;
+    size: Size;
+    collider: ColliderComponent;
+    velocity: VelocityComponent;
+}
 
 @autoRegisterSys([
     Position.name,
@@ -17,6 +24,102 @@ export class CollisionSystem extends System {
         })
     }
 
+    private handleHorizontalCollision(overlapX: number, entity1: EntityId, entity2: EntityId) {
+        const c1 = this.getCollisionInfo(entity1);
+        const c2 = this.getCollisionInfo(entity2);
+
+        if (c1.pos.x < c2.pos.x) { // entity1 在 entity2 左边
+            if (!c1.collider.fixed) {
+                c1.pos.x -= overlapX;
+            }
+            if (!c2.collider.fixed) {
+                c2.pos.x += overlapX;
+            }
+        } else { // entity1 在 entity2 右边
+            if (!c1.collider.fixed) {
+                c1.pos.x += overlapX;
+            }
+
+            if (!c2.collider.fixed) {
+                c2.pos.x -= overlapX;
+            }
+        }
+
+        if (c1.velocity && !c1.collider.fixed) {
+            c1.velocity.vx *= -0.5
+        }
+
+        if (c2.velocity && !c2.collider.fixed) {
+            c2.velocity.vx *= -0.5
+        }
+    }
+
+    private handleVerticalCollision(overlapY: number, entity1: EntityId, entity2: EntityId) {
+        const c1 = this.getCollisionInfo(entity1);
+        const c2 = this.getCollisionInfo(entity2);
+
+        if (c1.pos.y < c2.pos.y) { // entity1 在 entity2 上面
+            if (!c1.collider.fixed) {
+                c1.pos.y -= overlapY;
+            }
+            if (!c2.collider.fixed) {
+                c2.pos.y += overlapY;
+            }
+        } else { // entity1 在 entity2 下面
+            if (!c1.collider.fixed) {
+                c1.pos.y += overlapY;
+            }
+            if (!c2.collider.fixed) {
+                c2.pos.y -= overlapY;
+            }
+        }
+
+        if (c1.velocity && !c1.collider.fixed) {
+            c1.velocity.vy *= -0.5;
+        }
+
+        if (c2.velocity && !c2.collider.fixed) {
+            c2.velocity.vy *= -0.5;
+        }
+    }
+
+    private getCollisionInfo(entity: EntityId): CollisionInfo {
+        const pos = this.getComponent<Position>(entity, Position.name);
+        const collider = this.getComponent<ColliderComponent>(entity, ColliderComponent.name);
+        const vel = this.getComponent<VelocityComponent>(entity, VelocityComponent.name);
+        const size = this.getComponent<Size>(entity, Size.name);
+
+        return {
+            pos,
+            collider,
+            velocity: vel,
+            size,
+        }
+    }
+
+    private isCollide(entity1: EntityId, entity2: EntityId) {
+        const c1 = this.getCollisionInfo(entity1);
+        const c2 = this.getCollisionInfo(entity2);
+
+        return c1.pos.x < c2.pos.x + c2.size.width &&
+            c1.pos.x + c1.size.width > c2.pos.x &&
+            c1.pos.y < c2.pos.y + c2.size.height &&
+            c1.pos.y + c1.size.height > c2.pos.y
+    }
+
+    private getOverlap(entity1: EntityId, entity2: EntityId) {
+        const c1 = this.getCollisionInfo(entity1);
+        const c2 = this.getCollisionInfo(entity2);
+
+        const overlapX = Math.min(c1.pos.x + c1.size.width, c2.pos.x + c2.size.width) - Math.max(c1.pos.x, c2.pos.x);
+        const overlapY = Math.min(c1.pos.y + c1.size.height, c2.pos.y + c2.size.height) - Math.max(c1.pos.y, c2.pos.y);
+
+        return {
+            x: overlapX,
+            y: overlapY,
+        };
+    }
+
     public update(_: number): void {
         // 简单的两两碰撞检测 (效率低，但对于少量实体足够)
         const colliderComponents = this.getColliderComponents();
@@ -24,59 +127,26 @@ export class CollisionSystem extends System {
         for (let i = 0; i < colliderComponents.length; i++) {
             const entity1 = colliderComponents[i];
 
-            const pos1 = this.getComponent<Position>(entity1, Position.name);
             const collider1 = this.getComponent<ColliderComponent>(entity1, ColliderComponent.name);
-            const vel1 = this.getComponent<VelocityComponent>(entity1, VelocityComponent.name);
-            const size1 = this.getComponent<Size>(entity1, Size.name);
 
             for (let j = i + 1; j < colliderComponents.length; j++) {
                 const entity2 = colliderComponents[j];
 
-                const pos2 = this.getComponent<Position>(entity2, Position.name);
                 const collider2 = this.getComponent<ColliderComponent>(entity2, ColliderComponent.name);
-                const size2 = this.getComponent<Size>(entity2, Size.name);
-                const vel2 = this.getComponent<VelocityComponent>(entity2, VelocityComponent.name);
 
                 // AABB 碰撞检测
-                if (pos1.x < pos2.x + size2.width &&
-                    pos1.x + size1.width > pos2.x &&
-                    pos1.y < pos2.y + size2.height &&
-                    pos1.y + size1.height > pos2.y)
+                if (this.isCollide(entity1, entity2))
                 {
-                    // 发生碰撞！
-                    // 这里可以根据需要实现碰撞响应
-                    // 例如，阻止移动，或者触发事件
+                    const overlap = this.getOverlap(entity1, entity2);
 
-                    // 简单的阻止重叠 (将实体推开)
-                    const overlapX = Math.min(pos1.x + size1.width, pos2.x + size2.width) - Math.max(pos1.x, pos2.x);
-                    const overlapY = Math.min(pos1.y + size1.height, pos2.y + size2.height) - Math.max(pos1.y, pos2.y);
-
-                    if (overlapX < overlapY) { // 水平方向重叠较少，优先处理水平碰撞
-                        if (pos1.x < pos2.x) { // entity1 在 entity2 左边
-                            pos1.x -= overlapX;
-                        } else { // entity1 在 entity2 右边
-                            pos1.x += overlapX;
-                        }
-                        if (vel1) vel1.vx *= -0.5; // 减速反弹
-
-                        if (vel2) {
-                            vel2.vx *= -0.7;
-                        }
+                    if (overlap.x < overlap.y) { // 水平方向重叠较少，优先处理水平碰撞
+                        this.handleHorizontalCollision(overlap.x, entity1, entity2)
                     } else { // 垂直方向重叠较少，优先处理垂直碰撞
-                        if (pos1.y < pos2.y) { // entity1 在 entity2 上面
-                            pos1.y -= overlapY;
-                        } else { // entity1 在 entity2 下面
-                            pos1.y += overlapY;
-                        }
-
-                        if (vel1) {
-                            vel1.vy *= -0.5;
-                        }
-
-                        if (vel2) {
-                            vel2.vy *= -0.7;
-                        }
+                        this.handleVerticalCollision(overlap.y, entity1, entity2)
                     }
+
+                    collider1.collisionCount ++
+                    collider2.collisionCount ++
 
                     collider1.onCollision(entity2);
                     collider2.onCollision(entity1);

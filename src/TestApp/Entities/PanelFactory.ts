@@ -48,7 +48,11 @@ export const createPanel = (
     if (collider) {
         const c = new ColliderComponent();
         c.fixed = true;
-        ecs.addComponent(panel, ColliderComponent.name, c)
+        ecs.addComponent(panel, ColliderComponent.name, {
+            collisionCount: 0,
+            onCollision: () => {},
+            fixed: true
+        })
     }
 
 

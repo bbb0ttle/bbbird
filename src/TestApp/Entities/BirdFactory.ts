@@ -86,6 +86,8 @@ export const createBird = (ecs: ECSManager, screen: PreScreen, pos: Position, pa
     resetBird(ecs, bird, pos);
 
     ecs.addComponent<ColliderComponent>(bird, ColliderComponent.name, {
+        collisionCount: 0,
+        fixed: false,
         onCollision: (_) => {
             const state = ecs.getComponent<GameStateComponent>(bird, GameStateComponent.name)!.state;
 
@@ -100,8 +102,6 @@ export const createBird = (ecs: ECSManager, screen: PreScreen, pos: Position, pa
                 ecs.removeComponent(bird, VelocityComponent.name);
             } else if (state === GameState.Playing) {
                 changeAnimation("DIED", 1);
-                const health = ecs.getComponentMap<HealthComponent>(HealthComponent.name).get(bird)!;
-                health.health -= 1;
             }
         }
     })

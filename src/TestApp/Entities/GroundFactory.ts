@@ -16,8 +16,8 @@ export const createGround = (ecs: ECSManager, shape: string, pos: Position) => {
 
     ecs.addComponent<ColliderComponent>(groundEntity, ColliderComponent.name, {
         onCollision: (_) => {
-        }
+        },
+        collisionCount: 0,
+        fixed: true
     });
-
-
 }
