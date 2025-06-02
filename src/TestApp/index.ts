@@ -4,9 +4,8 @@ import {App} from "../BaseApp/Core/App";
 // @ts-ignore
 import * as BirdSystem from "./Systems/"
 import {createBird} from "./Entities/BirdFactory.ts";
-import {createPanel} from "./Entities/PanelFactory.ts";
+import {createGameStartPanel} from "./Entities/PanelFactory.ts";
 import {createGround} from "./Entities/GroundFactory.ts";
-import {PressRecycleComponent} from "./Components/PressRecycleComponent.ts";
 
 export class TestApp extends App {
     constructor() {
@@ -18,21 +17,7 @@ export class TestApp extends App {
 
         createFpsEntity(this.ecsManager, {x: 0, y: 0})
 
-        const startScreen = createPanel(
-            this.ecsManager,
-            this.screen,
-            "press 'space' to start\npress 'space' to jump\n\nthat's all.",
-            {
-                width: 50,
-                height: 8,
-            },
-            true,
-        )
-
-        this.ecsManager.addComponent<PressRecycleComponent>(startScreen, PressRecycleComponent.name, {
-            pressedKey: new Set(" ")
-        })
-
+        createGameStartPanel(this.ecsManager, this.screen);
 
         createBird(
             this.ecsManager,

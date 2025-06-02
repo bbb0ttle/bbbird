@@ -8,11 +8,10 @@ import {Position, Size} from "../../BaseApp/Core/types.ts";
 import {HealthComponent} from "../Components/HelthComponent.ts";
 import {GameState, GameStateComponent} from "../Components/GameStateComponent.ts";
 import type {PreScreen} from "../../BaseApp/Core/Screen/preScreen.ts";
-import {createPanel} from "./PanelFactory.ts";
+import {createGameOverPanel} from "./PanelFactory.ts";
 import {WallFactory} from "./WallFactory.ts";
 import {ScoreEntityType, ScoreUpdateComponent} from "../Components/ScoreUpdateComponent.ts";
 import {DeathComponent} from "../Components/DeathComponent.ts";
-import {PressRecycleComponent} from "../Components/PressRecycleComponent.ts";
 
 const createAnimationUpdater = (ecs: ECSManager, bird: EntityId) => (name: string, durationPerFrame: number = 0.25) => {
     const animation = ecs.getComponentMap<AnimationComponent>(AnimationComponent.name).get(bird);
@@ -143,24 +142,4 @@ export const createBird = (ecs: ECSManager, screen: PreScreen, pos: Position): E
 
     return bird;
 
-}
-
-const createGameOverPanel = (ecs: ECSManager, screen: PreScreen, score: number): EntityId => {
-    const panel =createPanel(
-        ecs,
-        screen,
-        "Game Over\n\nScore: " + score + "\n\nPress 'r' to restart",
-        {
-            width: 50,
-            height: 8,
-        },
-        false,
-        "Game Over"
-    );
-
-    ecs.addComponent<PressRecycleComponent>(panel, PressRecycleComponent.name, {
-        pressedKey: new Set("r"),
-    })
-
-    return panel;
 }

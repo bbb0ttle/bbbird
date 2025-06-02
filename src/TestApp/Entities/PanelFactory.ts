@@ -4,6 +4,7 @@ import type {PreScreen} from "../../BaseApp/Core/Screen/preScreen.ts";
 import {UICom} from "../../BaseApp/Components/UI/PanelCom.ts";
 import {ColliderComponent} from "../../BaseApp/Components/Physic/ColliderComponent.ts";
 import {strCompletion} from "../../BaseApp/Utils/StrHelper.ts";
+import {PressRecycleComponent} from "../Components/PressRecycleComponent.ts";
 
 export const createPanel = (
     ecs: ECSManager,
@@ -57,4 +58,44 @@ export const createPanel = (
 
 
     return panel;
+}
+
+export const createGameOverPanel = (ecs: ECSManager, screen: PreScreen, score: number): EntityId => {
+    const panel =createPanel(
+        ecs,
+        screen,
+        "Score: " + score + "\n\nPress 'r' to restart",
+        {
+            width: 50,
+            height: 8,
+        },
+        false,
+        "Game Over"
+    );
+
+    ecs.addComponent<PressRecycleComponent>(panel, PressRecycleComponent.name, {
+        pressedKey: new Set("r"),
+    })
+
+    return panel;
+}
+
+export const createGameStartPanel = (ecs: ECSManager, screen: PreScreen, content: string = "press 'space' to start\npress 'space' to jump"): EntityId => {
+    const startScreen = createPanel(
+        ecs,
+        screen,
+        content,
+        {
+            width: 50,
+            height: 8,
+        },
+        true,
+        "Keyboard"
+    )
+
+    ecs.addComponent<PressRecycleComponent>(startScreen, PressRecycleComponent.name, {
+        pressedKey: new Set(" ")
+    })
+
+    return startScreen;
 }
