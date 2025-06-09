@@ -14,14 +14,18 @@
   line-height: 1.1;
   display: inline-block;
 
-  border: dotted 1px;
-  padding: 4px;
+  /*border: dotted 1px;*/
+  padding: 8px;
 
   pointer-events: none;
 
   user-select: none;
 
   margin-top: -10px;
+
+  box-shadow: #0000004d inset 0px 0px 8px 0px;
+
+  background: #cccccc;
 }
 
 #app {
