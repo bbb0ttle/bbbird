@@ -25,7 +25,12 @@
 
   box-shadow: #0000004d inset 0px 0px 8px 0px;
 
-  background: #cccccc;
+  /*background: #cccccc;*/
+  border-radius: 22px;
+
+  background-color: #cccccce6;
+  background-image: url(http://i.imgur.com/VXcVUTX.png);
+  background-blend-mode: lighten;
 }
 
 #app {
