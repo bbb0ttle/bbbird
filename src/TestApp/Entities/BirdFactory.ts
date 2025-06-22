@@ -2,7 +2,7 @@ import {ColliderComponent} from "../../BaseApp/Components/Physic/ColliderCompone
 import {AnimationComponent, GravityComponent, VelocityComponent} from "../../BaseApp/Components";
 import type {ECSManager, EntityId} from "../../BaseApp/ECS/ecs.ts";
 import {createAnimation} from "./AnimationFactory.ts";
-import {BirdAnimation} from "../Assets/Animations/bird.ts";
+import { default as BirdAnimation } from "../Assets/Raw/bird.bba";
 import {InputComponent} from "../Components/InputComponent.ts";
 import {Position, Size} from "../../BaseApp/Core/types.ts";
 import {HealthComponent} from "../Components/HelthComponent.ts";
